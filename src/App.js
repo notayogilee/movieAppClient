@@ -1,6 +1,6 @@
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import LandingScreen from './screens/LandingScreen';
-import DetailsScreen from './screens/DetailsScreen';
+import LandingScreen from './components/screens/LandingScreen';
+import DetailsScreen from './components/screens/DetailsScreen';
 
 const App = () => {
   return (
