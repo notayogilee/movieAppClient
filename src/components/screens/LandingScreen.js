@@ -26,7 +26,6 @@ const Landing = () => {
 
     // when almost at bottom - load more movies
     if (offset + 500 >= height) {
-      console.log(page + 1);
       dispatch(listMoreMovies(page + 1));
     }
   };
@@ -37,7 +36,7 @@ const Landing = () => {
 
       <Grid container justifyContent="center" alignItems="center" rowSpacing={2} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
         {movies && movies.length > 0 && movies.map((movie) => (
-          <MovieItem key={movie.id} movie={movie} />
+          movie.id && <MovieItem key={`${movie.id}`} movie={movie} />
         )
         )}
       </Grid>
