@@ -81,7 +81,7 @@ const Navbar = () => {
               }}
             >
               {pages.map((page) => (
-                <Link key={page} to={{ pathname: page === "tv shows" ? "/shows" : `/${page}` }}>
+                <Link key={page} to={{ pathname: page === "TV Shows" ? "/shows" : `/${page}` }}>
                   <MenuItem onClick={handleCloseNavMenu}>
                     <Typography textAlign="center">{page}</Typography>
                   </MenuItem>

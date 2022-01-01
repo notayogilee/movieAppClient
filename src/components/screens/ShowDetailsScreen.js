@@ -4,18 +4,18 @@ import {
   Typography
 } from '@mui/material';
 
-const MovieDetails = () => {
+const ShowDetails = () => {
   const location = useLocation();
-  const { movie } = location.state;
+  const { show } = location.state;
 
   return (
     <Container>
       <Typography variant="h1" textAlign="center">
-        {movie.title}
+        {show.name}
       </Typography>
 
     </Container>
   )
 }
 
-export default MovieDetails;
+export default ShowDetails;

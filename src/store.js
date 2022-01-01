@@ -2,9 +2,11 @@ import { createStore, combineReducers, applyMiddleware } from 'redux';
 import thunk from 'redux-thunk';
 import { composeWithDevTools } from 'redux-devtools-extension';
 import { movieListReducer } from './reducers/movieReducers';
+import { showListReducer } from './reducers/showReducers';
 
 const reducer = combineReducers({
-  movieList: movieListReducer
+  movieList: movieListReducer,
+  showList: showListReducer
 });
 
 const initialState = {};
