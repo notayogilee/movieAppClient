@@ -1,4 +1,3 @@
-// import axios from 'axios';
 import {
   MOVIE_LIST_REQUEST,
   MOVIE_LIST_SUCCESS,
@@ -12,7 +11,7 @@ import { RestLink } from 'apollo-link-rest';
 import { gql } from '@apollo/client';
 
 // Set `RestLink` with your endpoint
-const restLink = new RestLink({ uri: "http://localhost:5000" });
+const restLink = new RestLink({ uri: "http://localhost:5000/api" });
 
 // Setup your client
 const client = new ApolloClient({
@@ -25,11 +24,9 @@ export const listMovies = () => async (dispatch) => {
   try {
     dispatch({ type: MOVIE_LIST_REQUEST });
 
-    // const { data } = await axios.get(`http://localhost:5000/api?page=${page}`);
-
     const query = gql`
       query Movies {
-        movies @rest(type: "Movies", path: "/api") {
+        movies @rest(type: "Movies", path: "/movies") {
           page
           results {
             id
@@ -46,7 +43,6 @@ export const listMovies = () => async (dispatch) => {
     `;
 
     const { data: { movies } } = await client.query({ query });
-    console.log(movies)
 
     dispatch({
       type: MOVIE_LIST_SUCCESS,
@@ -67,15 +63,13 @@ export const listMoreMovies = (page) => async (dispatch) => {
     dispatch({ type: MORE_MOVIE_LIST_REQUEST });
 
     // Set `RestLink` with your endpoint
-    const restLink = new RestLink({ uri: `http://localhost:5000/api?page=${page}` });
+    const restLink = new RestLink({ uri: `http://localhost:5000/api/movies?page=${page}` });
 
     // Setup your client
     const client = new ApolloClient({
       cache: new InMemoryCache(),
       link: restLink
     });
-
-    // const { data } = await axios.get(`http://localhost:5000/api?page=${page}`);
 
     const query = gql`
       query Movies{
@@ -96,7 +90,6 @@ export const listMoreMovies = (page) => async (dispatch) => {
     `;
 
     const { data: { movies } } = await client.query({ query });
-    console.log(movies)
 
     dispatch({
       type: MORE_MOVIE_LIST_SUCCESS,
