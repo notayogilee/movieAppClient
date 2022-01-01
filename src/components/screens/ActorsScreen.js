@@ -5,7 +5,7 @@ import {
   Typography,
   Container
 } from '@mui/material';
-import ActorItem from '../items/actorItem';
+import ActorItem from '../items/ActorItem';
 import Navbar from '../utils/Navbar';
 import { listActors, listMoreActors } from '../../actions/actorActions';
 

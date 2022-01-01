@@ -5,7 +5,7 @@ import {
   Typography,
   Container
 } from '@mui/material';
-import MovieItem from '../items/movieItem';
+import MovieItem from '../items/MovieItem';
 import Navbar from '../utils/Navbar';
 import { listMovies, listMoreMovies } from '../../actions/movieActions';
 
@@ -33,8 +33,8 @@ const Landing = () => {
 
   return (
     <Container maxWidth={false}>
-      <Navbar />
 
+      <Navbar />
       <Grid container justifyContent="center" alignItems="center" rowSpacing={2} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
         {movies && movies.length > 0 && movies.map((movie) => (
           movie.id && <MovieItem key={`${movie.id}`} movie={movie} />

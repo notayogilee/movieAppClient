@@ -5,7 +5,7 @@ import {
   Typography,
   Container
 } from '@mui/material';
-import ShowItem from '../items/showItem';
+import ShowItem from '../items/ShowItem';
 import Navbar from '../utils/Navbar';
 import { listShows, listMoreShows } from '../../actions/showActions';
 

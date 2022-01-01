@@ -1,4 +1,5 @@
 import { useLocation } from 'react-router-dom';
+import Navbar from '../utils/Navbar';
 import {
   Container,
   Typography
@@ -10,6 +11,7 @@ const MovieDetails = () => {
 
   return (
     <Container>
+      <Navbar />
       <Typography variant="h1" textAlign="center">
         {movie.title}
       </Typography>
