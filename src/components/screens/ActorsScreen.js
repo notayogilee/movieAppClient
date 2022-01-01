@@ -5,19 +5,19 @@ import {
   Typography,
   Container
 } from '@mui/material';
-import MovieItem from '../items/movieItem';
+import ActorItem from '../items/actorItem';
 import Navbar from '../utils/Navbar';
-// import { listMovies, listMoreMovies } from '../../actions/movieActions';
+import { listActors, listMoreActors } from '../../actions/actorActions';
 
 const Actors = () => {
   const dispatch = useDispatch();
 
-  // const movieList = useSelector(state => state.movieList);
-  // const { loading, movies, page } = movieList;
+  const actorList = useSelector(state => state.actorList);
+  const { loading, actors, page } = actorList;
 
-  // useEffect(() => {
-  //   dispatch(listMovies())
-  // }, [])
+  useEffect(() => {
+    dispatch(listActors())
+  }, [])
 
   // for inifinite scroll
   window.onscroll = function () {
@@ -27,7 +27,7 @@ const Actors = () => {
 
     // when almost at bottom - load more movies
     if (offset + 500 >= height) {
-      // dispatch(listMoreMovies(page + 1));
+      dispatch(listMoreActors(page + 1));
     }
   };
 
@@ -35,15 +35,15 @@ const Actors = () => {
     <Container maxWidth={false}>
       <Navbar />
       <Typography textAlign="center" style={{ paddingTop: "200px" }}>
-        TV Shows Page
+        Actors Page
       </Typography>
-      {/* 
+
       <Grid container justifyContent="center" alignItems="center" rowSpacing={2} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
-        {shows && shows.length > 0 && shows.map((show) => (
-          show.id && <ShowItem key={`${show.id}`} show={show} />
+        {actors && actors.length > 0 && actors.map((actor) => (
+          actor.id && <ActorItem key={`${actor.id}`} actor={actor} />
         )
         )}
-      </Grid> */}
+      </Grid>
     </Container >
   )
 }

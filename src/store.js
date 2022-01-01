@@ -3,10 +3,12 @@ import thunk from 'redux-thunk';
 import { composeWithDevTools } from 'redux-devtools-extension';
 import { movieListReducer } from './reducers/movieReducers';
 import { showListReducer } from './reducers/showReducers';
+import { actorListReducer } from './reducers/actorReducers';
 
 const reducer = combineReducers({
   movieList: movieListReducer,
-  showList: showListReducer
+  showList: showListReducer,
+  actorList: actorListReducer
 });
 
 const initialState = {};

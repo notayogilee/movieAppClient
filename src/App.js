@@ -5,6 +5,7 @@ import ShowsScreen from './components/screens/ShowsScreen';
 import ActorsScreen from './components/screens/ActorsScreen';
 import MovieDetailsScreen from './components/screens/MovieDetailsScreen';
 import ShowDetailsScreen from './components/screens/ShowDetailsScreen';
+import ActorDetailsScreen from './components/screens/ActorDetailsScreen';
 
 const App = () => {
   return (
@@ -16,6 +17,7 @@ const App = () => {
         <Route path="/actors" element={<ActorsScreen />} />
         <Route path="/movieDetails" element={<MovieDetailsScreen />} />
         <Route path="/showDetails" element={<ShowDetailsScreen />} />
+        <Route path="/actorDetails" element={<ActorDetailsScreen />} />
       </Routes>
     </Router>
   );
