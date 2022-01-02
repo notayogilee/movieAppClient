@@ -84,7 +84,6 @@ export const listMoreMovies = (page) => async (dispatch) => {
     `;
 
     const { data: { movies } } = await client.query({ query });
-    console.log(movies)
 
     dispatch({
       type: MORE_MOVIE_LIST_SUCCESS,

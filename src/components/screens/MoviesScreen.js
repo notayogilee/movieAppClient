@@ -43,7 +43,7 @@ const Movies = () => {
       setBottom(false);
       // abortController.abort();
     }
-  }, [bottom, dispatch, page]);
+  }, [bottom]);
 
   // for inifinite scroll
   window.onscroll = function () {
