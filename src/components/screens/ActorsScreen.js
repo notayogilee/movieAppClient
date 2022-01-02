@@ -35,8 +35,12 @@ const Actors = () => {
   return (
     <Container maxWidth={false}>
       <Navbar />
-      <Typography textAlign="center" style={{ paddingTop: "200px" }}>
-        Actors Page
+      <Typography
+        variant="h1"
+        textAlign="center"
+        style={{ paddingTop: "100px", paddingBottom: "50px" }}
+      >
+        Actors
       </Typography>
 
       <Grid container justifyContent="center" alignItems="center" rowSpacing={2} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>

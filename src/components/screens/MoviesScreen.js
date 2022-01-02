@@ -35,11 +35,24 @@ const Landing = () => {
     <Container maxWidth={false}>
 
       <Navbar />
-      <Grid container justifyContent="center" alignItems="center" rowSpacing={2} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
+      <Typography
+        variant="h1"
+        textAlign="center"
+        style={{ paddingTop: "100px", paddingBottom: "50px" }}
+      >
+        Movies
+      </Typography>
+      <Grid
+        container
+        justifyContent="center"
+        alignItems="center"
+        rowSpacing={2}
+        columnSpacing={{ xs: 1, sm: 2, md: 3 }}
+      >
         {movies && movies.length > 0 && movies.map((movie) => (
-          movie.id && <MovieItem key={`${movie.id}`} movie={movie} />
-        )
-        )}
+          movie.id &&
+          <MovieItem key={`${movie.id}`} movie={movie} />
+        ))}
       </Grid>
     </Container >
   )
