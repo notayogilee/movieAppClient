@@ -13,7 +13,7 @@ const Shows = () => {
   const dispatch = useDispatch();
 
   const showList = useSelector(state => state.showList);
-  const { loading, shows, page } = showList;
+  const { loading, shows, page, total_pages } = showList;
 
   useEffect(() => {
     dispatch(listShows())
@@ -26,8 +26,9 @@ const Shows = () => {
     let height = d.offsetHeight;
 
     // when almost at bottom - load more movies
-    if (offset + 500 >= height) {
-      dispatch(listMoreShows(page + 1));
+    const nextPage = page + 1;
+    if ((offset + 500 >= height) && (nextPage <= total_pages)) {
+      dispatch(listMoreShows(nextPage));
     }
   };
 

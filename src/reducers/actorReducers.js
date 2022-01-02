@@ -7,17 +7,18 @@ import {
   MORE_ACTOR_LIST_FAIL
 } from '../constants/actorConstants';
 
-export const actorListReducer = (state = { actors: [], page: 1 }, action) => {
+export const actorListReducer = (state = { actors: [], page: 1, total_pages: 1 }, action) => {
   switch (action.type) {
     case ACTOR_LIST_REQUEST:
-    case MORE_ACTOR_LIST_REQUEST:
       return { loading: true, actors: [...state.actors] };
+    case MORE_ACTOR_LIST_REQUEST:
+      return { loading: true, actors: [...state.actors], total_pages: state.total_pages };
     case ACTOR_LIST_SUCCESS:
       return {
         loading: false,
         actors: [...action.payload.results],
         page: action.payload.page,
-        total_page: action.payload.total_pages
+        total_pages: action.payload.total_pages
       };
     case MORE_ACTOR_LIST_SUCCESS:
       if (action.payload.results) {
@@ -25,7 +26,8 @@ export const actorListReducer = (state = { actors: [], page: 1 }, action) => {
         return {
           loading: false,
           actors: [...updatedActors],
-          page: action.payload.page
+          page: action.payload.page,
+          total_pages: state.total_pages
         };
       } else {
         return state;

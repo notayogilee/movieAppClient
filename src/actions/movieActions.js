@@ -28,13 +28,11 @@ export const listMovies = () => async (dispatch) => {
       query Movies {
         movies @rest(type: "Movies", path: "/movies") {
           page
+          total_pages
           results {
             id
             title 
-            overview
             poster_path
-            backdrop_path
-            release_date
             vote_average
             vote_count
           }
@@ -78,10 +76,7 @@ export const listMoreMovies = (page) => async (dispatch) => {
           results {
             id
             title 
-            overview
             poster_path
-            backdrop_path
-            release_date
             vote_average
             vote_count
           }

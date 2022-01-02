@@ -28,12 +28,11 @@ export const listShows = () => async (dispatch) => {
       query Shows {
         shows @rest(type: "Shows", path: "/shows") {
           page
+          total_pages
           results {
             id
             name 
-            overview
             poster_path
-            backdrop_path
             vote_average
             vote_count
           }
@@ -77,9 +76,7 @@ export const listMoreShows = (page) => async (dispatch) => {
           results {
             id
             name 
-            overview
             poster_path
-            backdrop_path
             vote_average
             vote_count
           }

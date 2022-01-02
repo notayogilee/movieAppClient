@@ -7,16 +7,18 @@ import {
   MORE_SHOW_LIST_FAIL
 } from '../constants/showConstants';
 
-export const showListReducer = (state = { shows: [], page: 1 }, action) => {
+export const showListReducer = (state = { shows: [], page: 1, total_pages: 1 }, action) => {
   switch (action.type) {
     case SHOW_LIST_REQUEST:
-    case MORE_SHOW_LIST_REQUEST:
       return { loading: true, shows: [...state.shows] };
+    case MORE_SHOW_LIST_REQUEST:
+      return { loading: true, shows: [...state.shows], total_pages: state.total_pages };
     case SHOW_LIST_SUCCESS:
       return {
         loading: false,
         shows: [...action.payload.results],
-        page: action.payload.page
+        page: action.payload.page,
+        total_pages: action.payload.total_pages
       };
     case MORE_SHOW_LIST_SUCCESS:
       if (action.payload.results) {
@@ -24,7 +26,8 @@ export const showListReducer = (state = { shows: [], page: 1 }, action) => {
         return {
           loading: false,
           shows: [...updatedShows],
-          page: action.payload.page
+          page: action.payload.page,
+          total_pages: state.total_pages
         };
       } else {
         return state;

@@ -7,16 +7,18 @@ import {
   MORE_MOVIE_LIST_FAIL
 } from '../constants/movieConstants';
 
-export const movieListReducer = (state = { movies: [], page: 1 }, action) => {
+export const movieListReducer = (state = { movies: [], page: 1, total_pages: 1 }, action) => {
   switch (action.type) {
     case MOVIE_LIST_REQUEST:
-    case MORE_MOVIE_LIST_REQUEST:
       return { loading: true, movies: [...state.movies] };
+    case MORE_MOVIE_LIST_REQUEST:
+      return { loading: true, movies: [...state.movies], total_pages: state.total_pages }
     case MOVIE_LIST_SUCCESS:
       return {
         loading: false,
         movies: [...action.payload.results],
-        page: action.payload.page
+        page: action.payload.page,
+        total_pages: action.payload.total_pages
       };
     case MORE_MOVIE_LIST_SUCCESS:
       if (action.payload.results) {
@@ -24,7 +26,8 @@ export const movieListReducer = (state = { movies: [], page: 1 }, action) => {
         return {
           loading: false,
           movies: [...updatedMovies],
-          page: action.payload.page
+          page: action.payload.page,
+          total_pages: state.total_pages
         };
       } else {
         return state;
