@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import {
   Grid,
@@ -7,6 +7,7 @@ import {
 } from '@mui/material';
 import MovieItem from '../items/MovieItem';
 import Navbar from '../utils/Navbar';
+import ToTopButton from '../utils/ToTopButton';
 import { listMovies, listMoreMovies } from '../../actions/movieActions';
 
 const Landing = () => {
@@ -15,13 +16,24 @@ const Landing = () => {
   const movieList = useSelector(state => state.movieList);
   const { loading, movies, page, total_pages } = movieList;
 
+  const [showToTopButton, setShowToTopButton] = useState(false);
+
+  window.addEventListener("scroll", (e) => {
+    if (window.scrollY <= 1000) {
+      setShowToTopButton(false)
+    } else {
+      setShowToTopButton(true)
+    }
+  });
+
   useEffect(() => {
     dispatch(listMovies())
-  }, [])
+  }, []);
 
   // for inifinite scroll
   window.onscroll = function () {
     let d = document.documentElement;
+    console.log(window.scrollY)
     let offset = d.scrollTop + window.innerHeight;
     let height = d.offsetHeight;
 
@@ -54,6 +66,9 @@ const Landing = () => {
           <MovieItem key={`${movie.id}`} movie={movie} />
         ))}
       </Grid>
+      {showToTopButton &&
+        <ToTopButton />
+      }
     </Container >
   )
 }

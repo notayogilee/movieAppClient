@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import {
   Grid,
@@ -7,6 +7,7 @@ import {
 } from '@mui/material';
 import ActorItem from '../items/ActorItem';
 import Navbar from '../utils/Navbar';
+import ToTopButton from '../utils/ToTopButton';
 import { listActors, listMoreActors } from '../../actions/actorActions';
 
 const Actors = () => {
@@ -15,9 +16,19 @@ const Actors = () => {
   const actorList = useSelector(state => state.actorList);
   const { loading, actors, page, total_pages } = actorList;
 
+  const [showToTopButton, setShowToTopButton] = useState(false);
+
   useEffect(() => {
     dispatch(listActors())
-  }, [])
+  }, []);
+
+  window.addEventListener("scroll", (e) => {
+    if (window.scrollY <= 1000) {
+      setShowToTopButton(false)
+    } else {
+      setShowToTopButton(true)
+    }
+  });
 
   // for inifinite scroll
   window.onscroll = function () {
@@ -49,6 +60,9 @@ const Actors = () => {
         )
         )}
       </Grid>
+      {showToTopButton &&
+        <ToTopButton />
+      }
     </Container >
   )
 }

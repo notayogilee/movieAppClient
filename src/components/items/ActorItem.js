@@ -4,7 +4,7 @@ import {
   Typography
 } from '@mui/material';
 import { makeStyles } from '@mui/styles';
-import moviePoster from '../../img/anika-mikkelson.jpg';
+import moviePoster from '../img/anika-mikkelson.jpg';
 
 const useStyles = makeStyles({
   posterContainer: {
