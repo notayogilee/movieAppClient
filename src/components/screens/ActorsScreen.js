@@ -31,6 +31,7 @@ const Actors = () => {
     fetchActors();
     return () => {
       fetchingActors = false;
+      setBottom(false);
     }
   }, [bottom]);
 

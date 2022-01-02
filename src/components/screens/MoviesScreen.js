@@ -3,8 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import {
   Grid,
   Typography,
-  Container,
-  Rating
+  Container
 } from '@mui/material';
 import MovieItem from '../items/MovieItem';
 import Navbar from '../utils/Navbar';
@@ -30,8 +29,9 @@ const Movies = () => {
 
   useEffect(() => {
     let fetchingMovies = true;
+    // let abortController = new AbortController();
     const fetchMovies = async () => {
-      if (movies.length === 0 && fetchMovies) {
+      if (movies.length === 0 && fetchingMovies) {
         await dispatch(listMovies());
       } else if (bottom && fetchingMovies) {
         await dispatch(listMoreMovies(page + 1))
@@ -41,8 +41,9 @@ const Movies = () => {
     return () => {
       fetchingMovies = false;
       setBottom(false);
+      // abortController.abort();
     }
-  }, [bottom]);
+  }, [bottom, dispatch, page]);
 
   // for inifinite scroll
   window.onscroll = function () {
@@ -79,7 +80,6 @@ const Movies = () => {
           movie.id &&
           <Grid item key={`${movie.id}`}>
             <MovieItem movie={movie} />
-            <Rating name="read-only" value={movie.vote_average / 2} precision={0.1} readOnly />
           </Grid>
         ))}
       </Grid>
