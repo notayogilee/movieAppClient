@@ -17,6 +17,7 @@ const Shows = () => {
   const { loading, shows, page, total_pages } = showList;
 
   const [showToTopButton, setShowToTopButton] = useState(false);
+  const [bottom, setBottom] = useState(false);
 
   window.addEventListener("scroll", (e) => {
     if (window.scrollY <= 1000) {
@@ -27,8 +28,20 @@ const Shows = () => {
   });
 
   useEffect(() => {
-    dispatch(listShows())
-  }, []);
+    let fetchingShows = true;
+    const fetchShows = async () => {
+      if (shows.length === 0 && fetchingShows) {
+        await dispatch(listShows());
+      } else if (bottom && fetchingShows) {
+        await dispatch(listMoreShows(page + 1));
+      }
+    }
+    fetchShows();
+    return () => {
+      fetchingShows = false;
+      setBottom(false);
+    }
+  }, [bottom]);
 
   // for inifinite scroll
   window.onscroll = function () {
@@ -39,7 +52,7 @@ const Shows = () => {
     // when almost at bottom - load more movies
     const nextPage = page + 1;
     if ((offset + 500 >= height) && (nextPage <= total_pages)) {
-      dispatch(listMoreShows(nextPage));
+      setBottom(true);
     }
   };
 

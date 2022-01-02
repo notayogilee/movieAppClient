@@ -39,7 +39,7 @@ export const listActors = () => async (dispatch) => {
     `;
 
     const { data: { actors } } = await client.query({ query });
-    console.log(actors)
+
     dispatch({
       type: ACTOR_LIST_SUCCESS,
       payload: actors

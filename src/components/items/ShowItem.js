@@ -21,7 +21,6 @@ const useStyles = makeStyles({
 })
 
 const ShowItem = ({ show }) => {
-  // console.log(movie)
   const classes = useStyles();
 
   return (

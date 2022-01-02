@@ -21,7 +21,6 @@ const useStyles = makeStyles({
 })
 
 const MovieItem = ({ movie }) => {
-  // console.log(movie)
   const classes = useStyles();
 
   return (
@@ -33,6 +32,7 @@ const MovieItem = ({ movie }) => {
           <div className={classes.posterContainer}>
             <img src={moviePoster} width="185" height="278" alt={movie.title} />
             <Typography variant="h4" textAlign="center" className={classes.posterText}>{movie.title}</Typography>
+
           </div>
         )}
       </Link>

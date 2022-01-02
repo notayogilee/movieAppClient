@@ -17,10 +17,22 @@ const Actors = () => {
   const { loading, actors, page, total_pages } = actorList;
 
   const [showToTopButton, setShowToTopButton] = useState(false);
+  const [bottom, setBottom] = useState(false);
 
   useEffect(() => {
-    dispatch(listActors())
-  }, []);
+    let fetchingActors = true;
+    const fetchActors = async () => {
+      if (actors.length === 0 && fetchingActors) {
+        await dispatch(listActors())
+      } else if (bottom && fetchingActors) {
+        await dispatch(listMoreActors(page + 1))
+      }
+    }
+    fetchActors();
+    return () => {
+      fetchingActors = false;
+    }
+  }, [bottom]);
 
   window.addEventListener("scroll", (e) => {
     if (window.scrollY <= 1000) {
@@ -39,7 +51,7 @@ const Actors = () => {
     // when almost at bottom - load more movies
     const nextPage = page + 1;
     if ((offset + 500 >= height) && (nextPage <= total_pages)) {
-      dispatch(listMoreActors(nextPage));
+      setBottom(true);
     }
   };
 
