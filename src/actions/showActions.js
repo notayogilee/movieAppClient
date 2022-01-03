@@ -4,7 +4,10 @@ import {
   SHOW_LIST_FAIL,
   MORE_SHOW_LIST_REQUEST,
   MORE_SHOW_LIST_SUCCESS,
-  MORE_SHOW_LIST_FAIL
+  MORE_SHOW_LIST_FAIL,
+  SHOW_DETAILS_REQUEST,
+  SHOW_DETAILS_SUCCESS,
+  SHOW_DETAILS_FAIL,
 } from '../constants/showConstants';
 import { ApolloClient, InMemoryCache } from '@apollo/client';
 import { RestLink } from 'apollo-link-rest';
@@ -18,7 +21,6 @@ const client = new ApolloClient({
   cache: new InMemoryCache(),
   link: restLink
 });
-
 
 export const listShows = () => async (dispatch) => {
   try {
@@ -93,6 +95,53 @@ export const listMoreShows = (page) => async (dispatch) => {
   } catch (error) {
     dispatch({
       type: MORE_SHOW_LIST_FAIL,
+      payload: error.response && error.message ?
+        error.response.data.message :
+        error.message
+    })
+  }
+}
+
+export const showDetails = (showId) => async (dispatch) => {
+  try {
+    dispatch({ type: SHOW_DETAILS_REQUEST });
+
+    const restLink = new RestLink({ uri: `http://localhost:5000/api/shows/${showId}` });
+
+    const client = new ApolloClient({
+      cache: new InMemoryCache(),
+      link: restLink
+    });
+
+    const query = gql`
+      query Show {
+        show @rest(type: "Shows", path: "") {
+          backdrop_path
+          episode_run_time
+          homepage
+          id
+          name
+          networks
+          number_of_episodes
+          number_of_seasons
+          overview
+          poster_path
+          seasons
+          vote_average
+          vote_count
+        }
+      }
+    `;
+
+    const { data: { show } } = await client.query({ query });
+
+    dispatch({
+      type: SHOW_DETAILS_SUCCESS,
+      payload: show
+    })
+  } catch (error) {
+    dispatch({
+      type: SHOW_DETAILS_FAIL,
       payload: error.response && error.message ?
         error.response.data.message :
         error.message
