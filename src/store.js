@@ -1,12 +1,13 @@
 import { createStore, combineReducers, applyMiddleware } from 'redux';
 import thunk from 'redux-thunk';
 import { composeWithDevTools } from 'redux-devtools-extension';
-import { movieListReducer } from './reducers/movieReducers';
+import { movieListReducer, movieDetailsReducer } from './reducers/movieReducers';
 import { showListReducer } from './reducers/showReducers';
 import { actorListReducer } from './reducers/actorReducers';
 
 const reducer = combineReducers({
   movieList: movieListReducer,
+  movieDetails: movieDetailsReducer,
   showList: showListReducer,
   actorList: actorListReducer
 });

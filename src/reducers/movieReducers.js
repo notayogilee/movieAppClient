@@ -4,7 +4,10 @@ import {
   MOVIE_LIST_FAIL,
   MORE_MOVIE_LIST_REQUEST,
   MORE_MOVIE_LIST_SUCCESS,
-  MORE_MOVIE_LIST_FAIL
+  MORE_MOVIE_LIST_FAIL,
+  MOVIE_DETAILS_REQUEST,
+  MOVIE_DETAILS_SUCCESS,
+  MOVIE_DETAILS_FAIL,
 } from '../constants/movieConstants';
 
 export const movieListReducer = (state = { movies: [], page: 1, total_pages: 1 }, action) => {
@@ -32,9 +35,23 @@ export const movieListReducer = (state = { movies: [], page: 1, total_pages: 1 }
       } else {
         return state;
       }
-
     case MOVIE_LIST_FAIL:
     case MORE_MOVIE_LIST_FAIL:
+    default:
+      return state;
+  }
+}
+
+export const movieDetailsReducer = (state = { movie: {} }, action) => {
+  switch (action.type) {
+    case MOVIE_DETAILS_REQUEST:
+      return { loading: true, movie: {} }
+    case MOVIE_DETAILS_SUCCESS:
+      return {
+        loading: false,
+        movie: action.payload
+      }
+    case MOVIE_DETAILS_FAIL:
       return {
         loading: false,
         error: action.payload
