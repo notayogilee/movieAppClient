@@ -3,14 +3,15 @@ import thunk from 'redux-thunk';
 import { composeWithDevTools } from 'redux-devtools-extension';
 import { movieListReducer, movieDetailsReducer } from './reducers/movieReducers';
 import { showDetailsReducer, showListReducer } from './reducers/showReducers';
-import { actorListReducer } from './reducers/actorReducers';
+import { actorListReducer, actorDetailsReducer } from './reducers/actorReducers';
 
 const reducer = combineReducers({
   movieList: movieListReducer,
   movieDetails: movieDetailsReducer,
   showList: showListReducer,
   showDetails: showDetailsReducer,
-  actorList: actorListReducer
+  actorList: actorListReducer,
+  actorDetails: actorDetailsReducer
 });
 
 const initialState = {};

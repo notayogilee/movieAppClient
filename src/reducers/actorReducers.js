@@ -4,7 +4,10 @@ import {
   ACTOR_LIST_FAIL,
   MORE_ACTOR_LIST_REQUEST,
   MORE_ACTOR_LIST_SUCCESS,
-  MORE_ACTOR_LIST_FAIL
+  MORE_ACTOR_LIST_FAIL,
+  ACTOR_DETAILS_REQUEST,
+  ACTOR_DETAILS_SUCCESS,
+  ACTOR_DETAILS_FAIL,
 } from '../constants/actorConstants';
 
 export const actorListReducer = (state = { actors: [], page: 1, total_pages: 1 }, action) => {
@@ -35,6 +38,28 @@ export const actorListReducer = (state = { actors: [], page: 1, total_pages: 1 }
 
     case ACTOR_LIST_FAIL:
     case MORE_ACTOR_LIST_FAIL:
+      return {
+        loading: false,
+        error: action.payload
+      };
+    default:
+      return state;
+  }
+}
+
+export const actorDetailsReducer = (state = { actor: {} }, action) => {
+  switch (action.type) {
+    case ACTOR_DETAILS_REQUEST:
+      return {
+        loading: true,
+        actor: {}
+      }
+    case ACTOR_DETAILS_SUCCESS:
+      return {
+        loading: false,
+        actor: action.payload
+      }
+    case ACTOR_DETAILS_FAIL:
       return {
         loading: false,
         error: action.payload
