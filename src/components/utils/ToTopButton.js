@@ -1,5 +1,5 @@
 import { Fab } from '@mui/material';
-import { Navigation, StayPrimaryLandscape } from '@mui/icons-material';
+import { Navigation } from '@mui/icons-material';
 import { makeStyles } from '@mui/styles';
 
 const useStyles = makeStyles({
