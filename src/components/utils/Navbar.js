@@ -10,6 +10,7 @@ import {
   MenuItem,
   Container,
   Slide,
+  Zoom,
   useScrollTrigger
 } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
@@ -25,8 +26,22 @@ const useStyles = makeStyles({
     margin: '1rem',
     padding: '1rem'
   },
+  mobileLink: {
+    textDecoration: 'none',
+    color: '#333',
+    margin: '0.5rem',
+    padding: '0.5rem'
+  },
+  activeLink: {
+    textDecoration: 'none',
+    color: '#f4f4f4',
+    margin: '1rem 1rem 0 1rem',
+    padding: '1rem 1rem 0 1rem'
+  },
   active: {
-    borderBottom: 'solid #f4f4f4 1px'
+    borderBottom: 'solid #f4f4f4 2px',
+    paddingTop: '0',
+    marginTop: '0'
   }
 })
 
@@ -49,6 +64,7 @@ const HideOnScroll = (props) => {
 const Navbar = () => {
   const classes = useStyles();
 
+  // get route name
   const { pathname } = useLocation();
   const current = pathname.substring(1);
 
@@ -109,7 +125,7 @@ const Navbar = () => {
                   }}
                 >
                   {pages.map((page) => (
-                    <Link key={page} to={{ pathname: page === "TV Shows" ? "/shows" : `/${page}` }}>
+                    <Link key={page} to={{ pathname: page === "TV Shows" ? "/shows" : `/${page}` }} className={classes.mobileLink}>
                       <MenuItem onClick={handleCloseNavMenu}>
                         <Typography textAlign="center">{page}</Typography>
                       </MenuItem>
@@ -118,28 +134,33 @@ const Navbar = () => {
                   ))}
                 </Menu>
               </Box>
-              <Link to={{ pathname: "/" }}>
+              <Link to={{ pathname: "/" }} className={classes.link}>
                 <Typography
                   variant="h6"
                   noWrap
                   component="div"
                   sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}
                 >
-                  LOGO
+                  On The Screen!
                 </Typography>
               </Link>
               <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' }, }}>
                 {pages.map((page) => (
+                  <div style={{ display: "flex", flexDirection: "column", justifyContent: "center" }}>
+                    <Link
+                      className={(page.toLowerCase() === current) || (page === "TV Shows" && current === "shows") ? `${classes.activeLink}` : `${classes.link}`}
+                      key={page}
+                      to={{ pathname: page === "TV Shows" ? "/shows" : `/${page.toLowerCase()} ` }}
+                      onClick={handleCloseNavMenu}
+                      sx={{ my: 2, color: 'white', display: 'flex' }}
+                    >
+                      {page}
+                    </Link>
+                    <Zoom timeout={500} in={current === "movies" || current === "shows" || current === "actors"}>
+                      <div className={(page.toLowerCase() === current) || (page === "TV Shows" && current === "shows") ? `${classes.active} ${classes.link}` : ``}></div>
+                    </Zoom>
+                  </div>
 
-                  <Link
-                    className={(page.toLowerCase() === current) || (page === "TV Shows" && current === "shows") ? `${classes.active} ${classes.link}` : `${classes.link}`}
-                    key={page}
-                    to={{ pathname: page === "TV Shows" ? "/shows" : `/${page.toLowerCase()} ` }}
-                    onClick={handleCloseNavMenu}
-                    sx={{ my: 2, color: 'white', display: 'flex' }}
-                  >
-                    {page}
-                  </Link>
                 )
                 )}
               </Box>
