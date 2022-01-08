@@ -78,7 +78,11 @@ const Movies = () => {
       >
         {movies && movies.length > 0 && movies.map((movie) => (
           movie.id &&
-          <Grid item key={`${movie.id}`}>
+          <Grid
+            item
+            key={`${movie.id}`}
+            width={278}
+            height={500}>
             <MovieItem movie={movie} />
           </Grid>
         ))}

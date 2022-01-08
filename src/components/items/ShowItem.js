@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom';
+import slugify from 'react-slugify';
 import {
   Grid,
   Typography
@@ -22,10 +23,11 @@ const useStyles = makeStyles({
 
 const ShowItem = ({ show }) => {
   const classes = useStyles();
+  const showSlug = slugify(show.name);
 
   return (
     <Grid item maxWidth={300} >
-      <Link to="/showDetails" state={{ show: show }}>
+      <Link to={`/shows/${showSlug}`} state={{ show: show }}>
         {show.poster_path ? (
           <img src={`https://www.themoviedb.org/t/p/w185/${show.poster_path}`} width="185" height="278" alt={show.name} />
         ) : (

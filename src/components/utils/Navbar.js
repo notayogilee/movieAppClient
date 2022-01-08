@@ -146,10 +146,10 @@ const Navbar = () => {
               </Link>
               <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' }, }}>
                 {pages.map((page) => (
-                  <div style={{ display: "flex", flexDirection: "column", justifyContent: "center" }}>
+                  <div key={page} style={{ display: "flex", flexDirection: "column", justifyContent: "center" }}>
                     <Link
                       className={(page.toLowerCase() === current) || (page === "TV Shows" && current === "shows") ? `${classes.activeLink}` : `${classes.link}`}
-                      key={page}
+
                       to={{ pathname: page === "TV Shows" ? "/shows" : `/${page.toLowerCase()} ` }}
                       onClick={handleCloseNavMenu}
                       sx={{ my: 2, color: 'white', display: 'flex' }}

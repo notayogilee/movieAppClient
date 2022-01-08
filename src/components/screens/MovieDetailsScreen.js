@@ -22,7 +22,7 @@ const MovieDetails = () => {
     poster_path,
     backdrop_path
   } } = stateMovieDetails;
-  console.log(stateMovieDetails)
+
   const location = useLocation();
   const { movie } = location.state;
 

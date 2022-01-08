@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom';
+import slugify from 'react-slugify';
 import {
   Grid,
   Typography
@@ -22,10 +23,11 @@ const useStyles = makeStyles({
 
 const ActorItem = ({ actor }) => {
   const classes = useStyles();
+  const actorSlug = slugify(actor.name)
 
   return (
     <Grid item maxWidth={300} >
-      <Link to="/actorDetails" state={{ actor }}>
+      <Link to={`/actors/${actorSlug}`} state={{ actor }}>
         {actor.profile_path ? (
           <img src={`https://www.themoviedb.org/t/p/w185/${actor.profile_path}`} width="185" height="278" alt={actor.name} />
         ) : (
