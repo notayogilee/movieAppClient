@@ -1,13 +1,15 @@
 import { useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { movieDetails } from '../../actions/movieActions';
+import Moment from 'react-moment';
+import { movieDetails, movieCast } from '../../actions/movieActions';
 import Navbar from '../utils/Navbar';
 import {
   Container,
   Typography,
-  Paper,
-  Fade
+  Rating,
+  Fade,
+  Slide
 } from '@mui/material';
 import { makeStyles } from '@mui/styles';
 
@@ -24,13 +26,23 @@ const useStyles = makeStyles({
     position: 'absolute',
     width: '100%',
     height: '100%',
-    opacity: '0.5',
+    opacity: '0.4',
     zIndex: '-1'
   },
   body: {
     height: '100vh',
     width: '100vw',
-    margin: '0'
+    margin: '0',
+    background: 'linear-gradient(to right, rgba(0, 0, 0, 1), rgba(51, 51, 51, 0))'
+  },
+  content: {
+    position: 'absolute',
+    color: '#f4f4f4',
+    height: '80%',
+    width: '30%',
+    zIndex: '100',
+    top: '15%',
+    left: '3%'
   }
 });
 
@@ -39,9 +51,11 @@ const MovieDetails = () => {
   const classes = useStyles();
 
   const stateMovieDetails = useSelector(state => state.movieDetails);
+  const stateMovieCast = useSelector(state => state.movieCast);
   const { loading, movie: {
     title,
     tagline,
+    overview,
     vote_average,
     vote_count,
     runtime,
@@ -50,6 +64,10 @@ const MovieDetails = () => {
     backdrop_path
   } } = stateMovieDetails;
 
+  console.log(stateMovieCast)
+
+  const rating = vote_average / 2;
+  console.log(rating)
   const location = useLocation();
   const { movie } = location.state;
 
@@ -64,12 +82,37 @@ const MovieDetails = () => {
     <Container maxWidth={false} className={classes.root}>
       <Navbar />
 
-      <Fade timeout={750} in={!loading}>
+      <Fade in={!loading}>
         <div className={classes.body}>
           <img className={classes.image} src={`https://www.themoviedb.org/t/p/original${backdrop_path}`} />
-          <Typography variant="h1">
-            {title}
-          </Typography>
+          <Slide timeout={750} direction='right' in={!loading}>
+            <div className={classes.content}>
+              <Typography variant="h3">
+                {title}
+              </Typography>
+              <Typography variant="h4">
+                {tagline}
+              </Typography>
+              <div style={{ display: 'flex', alignItems: 'center' }}>
+                <Rating
+                  value={rating}
+                  precision={0.1}
+                  size="small"
+                  readOnly
+                />
+                <Typography ml={1} component="span" variant="h6"> based on {vote_count} votes</Typography>
+              </div>
+              <Typography mt={4} variant="h5">
+                {overview}
+              </Typography>
+              <Typography mt={4} variant="h6">
+                Release Date: <Moment format='d MMM yyyy'>{release_date}</Moment>
+              </Typography>
+              <Typography variant="h6">
+                Runtime: {runtime} minutes
+              </Typography>
+            </div>
+          </Slide>
         </div>
       </Fade>
 

@@ -7,7 +7,10 @@ import {
   MORE_MOVIE_LIST_FAIL,
   MOVIE_DETAILS_REQUEST,
   MOVIE_DETAILS_SUCCESS,
-  MOVIE_DETAILS_FAIL
+  MOVIE_DETAILS_FAIL,
+  MOVIE_CAST_REQUEST,
+  MOVIE_CAST_SUCCESS,
+  MOVIE_CAST_FAIL
 } from '../constants/movieConstants';
 import { ApolloClient, InMemoryCache } from '@apollo/client';
 import { RestLink } from 'apollo-link-rest';
@@ -103,25 +106,24 @@ export const listMoreMovies = (page) => async (dispatch) => {
 }
 
 export const movieDetails = (movieId) => async (dispatch) => {
+
+  const restLink = new RestLink({ uri: `http://localhost:5000/api/movies/${movieId}` });
+  const client = new ApolloClient({
+    cache: new InMemoryCache(),
+    link: restLink
+  });
+
   try {
     dispatch({ type: MOVIE_DETAILS_REQUEST });
 
-    // Set `RestLink` with your endpoint
-    const restLink = new RestLink({ uri: `http://localhost:5000/api/movies/${movieId}` });
-
-    // Setup your client
-    const client = new ApolloClient({
-      cache: new InMemoryCache(),
-      link: restLink
-    });
-
-    const query = gql`
+    const movieDetails = gql`
   query MovieDetails{
-    movie(id: movieId) @rest(type: "Movie", path: "") {
+    movie(id: movieId) @rest(type: "Details", path: "") {
       title
       vote_average
       vote_count
       tagline
+      overview
       runtime
       release_date
       poster_path
@@ -130,17 +132,49 @@ export const movieDetails = (movieId) => async (dispatch) => {
   }
 `;
 
-    const { data: { movie } } = await client.query({ query });
+    const { data: { movie } } = await client.query({ query: movieDetails });
 
     dispatch({
       type: MOVIE_DETAILS_SUCCESS,
       payload: movie
     })
 
-
   } catch (error) {
     dispatch({
       type: MOVIE_DETAILS_FAIL,
+      payload: error.response && error.message ?
+        error.response.data.message :
+        error.message
+    })
+  }
+
+  dispatch({ type: MOVIE_CAST_REQUEST });
+
+  try {
+    const movieCast = gql`
+  query MovieCast{
+    cast(id: movieId) @rest(type: "Cast", path: "/credits") {
+      cast {
+      id
+      name  
+      character
+      order
+      profile_path
+    }
+    }
+  }
+  `;
+
+    const { data: { cast } } = await client.query({ query: movieCast });
+
+    dispatch({
+      type: MOVIE_CAST_SUCCESS,
+      payload: cast
+    })
+
+  } catch (error) {
+    dispatch({
+      type: MOVIE_CAST_FAIL,
       payload: error.response && error.message ?
         error.response.data.message :
         error.message

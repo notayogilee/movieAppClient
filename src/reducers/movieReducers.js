@@ -8,6 +8,9 @@ import {
   MOVIE_DETAILS_REQUEST,
   MOVIE_DETAILS_SUCCESS,
   MOVIE_DETAILS_FAIL,
+  MOVIE_CAST_REQUEST,
+  MOVIE_CAST_SUCCESS,
+  MOVIE_CAST_FAIL
 } from '../constants/movieConstants';
 
 export const movieListReducer = (state = { movies: [], page: 1, total_pages: 1 }, action) => {
@@ -52,6 +55,25 @@ export const movieDetailsReducer = (state = { movie: {} }, action) => {
         movie: action.payload
       }
     case MOVIE_DETAILS_FAIL:
+      return {
+        loading: false,
+        error: action.payload
+      };
+    default:
+      return state;
+  }
+}
+
+export const movieCastReducer = (state = { cast: {} }, action) => {
+  switch (action.type) {
+    case MOVIE_CAST_REQUEST:
+      return { loading: true, movie: {} }
+    case MOVIE_CAST_SUCCESS:
+      return {
+        loading: false,
+        cast: action.payload
+      }
+    case MOVIE_CAST_FAIL:
       return {
         loading: false,
         error: action.payload
