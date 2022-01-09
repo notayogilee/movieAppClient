@@ -49,7 +49,7 @@ const Actors = () => {
     let offset = d.scrollTop + window.innerHeight;
     let height = d.offsetHeight;
 
-    // when almost at bottom - load more movies
+    // when almost at bottom - load more actors
     const nextPage = page + 1;
     if ((offset + 500 >= height) && (nextPage <= total_pages)) {
       setBottom(true);
