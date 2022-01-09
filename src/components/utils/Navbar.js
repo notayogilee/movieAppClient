@@ -43,7 +43,7 @@ const useStyles = makeStyles({
     paddingTop: '0',
     marginTop: '0'
   }
-})
+});
 
 const pages = ['Movies', 'TV Shows', 'Actors'];
 
