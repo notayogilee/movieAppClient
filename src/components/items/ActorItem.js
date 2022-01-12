@@ -1,8 +1,11 @@
 import { Link } from 'react-router-dom';
 import slugify from 'react-slugify';
 import {
-  Grid,
-  Typography
+  Typography,
+  Card,
+  CardMedia,
+  CardContent,
+  CardActionArea
 } from '@mui/material';
 import { makeStyles } from '@mui/styles';
 import moviePoster from '../img/anika-mikkelson.jpg';
@@ -26,18 +29,24 @@ const ActorItem = ({ actor }) => {
   const actorSlug = slugify(actor.name)
 
   return (
-    <Grid item maxWidth={300} >
-      <Link to={`/actors/${actorSlug}`} state={{ actor }}>
-        {actor.profile_path ? (
-          <img src={`https://www.themoviedb.org/t/p/w185/${actor.profile_path}`} width="185" height="278" alt={actor.name} />
-        ) : (
-          <div className={classes.posterContainer}>
-            <img src={moviePoster} width="185" height="278" alt={actor.name} />
-            <Typography variant="h4" textAlign="center" className={classes.posterText}>{actor.name}</Typography>
-          </div>
-        )}
-      </Link>
-    </Grid>
+    <Card >
+      <CardActionArea>
+        <Link to={`/actors/${actorSlug}`} state={{ actor }}>
+          <CardMedia
+            component="img"
+            src={actor.profile_path ? `https://www.themoviedb.org/t/p/w185${actor.profile_path}` : moviePoster}
+            alt={actor.name}
+          />
+          {actor.character &&
+            <CardContent>
+              <Typography>
+                {actor.name} plays {actor.character}
+              </Typography>
+            </CardContent>
+          }
+        </Link>
+      </CardActionArea>
+    </Card>
   )
 
 }

@@ -2,14 +2,20 @@ import { useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import Moment from 'react-moment';
-import { movieDetails, movieCast } from '../../actions/movieActions';
+import { movieDetails } from '../../actions/movieActions';
 import Navbar from '../utils/Navbar';
+import ActorItem from '../items/ActorItem';
 import {
   Container,
   Typography,
   Rating,
   Fade,
-  Slide
+  Slide,
+  Grid,
+  Card,
+  CardMedia,
+  CardContent,
+  CardActionArea
 } from '@mui/material';
 import { makeStyles } from '@mui/styles';
 
@@ -43,6 +49,15 @@ const useStyles = makeStyles({
     zIndex: '100',
     top: '15%',
     left: '3%'
+  },
+  castContainer: {
+    position: 'absolute',
+    color: '#f4f4f4',
+    height: '80%',
+    width: '30%',
+    zIndex: '100',
+    top: '15%',
+    left: '40%'
   }
 });
 
@@ -51,23 +66,27 @@ const MovieDetails = () => {
   const classes = useStyles();
 
   const stateMovieDetails = useSelector(state => state.movieDetails);
-  const stateMovieCast = useSelector(state => state.movieCast);
-  const { loading, movie: {
-    title,
-    tagline,
-    overview,
-    vote_average,
-    vote_count,
-    runtime,
-    release_date,
-    poster_path,
-    backdrop_path
-  } } = stateMovieDetails;
 
-  console.log(stateMovieCast)
+  const {
+    loading,
+    movieDetails: {
+      details: {
+        title,
+        tagline,
+        overview,
+        vote_average,
+        vote_count,
+        runtime,
+        release_date,
+        poster_path,
+        backdrop_path
+      },
+      cast
+    }
+  } = stateMovieDetails;
 
   const rating = vote_average / 2;
-  console.log(rating)
+
   const location = useLocation();
   const { movie } = location.state;
 
@@ -81,6 +100,7 @@ const MovieDetails = () => {
   return (
     <Container maxWidth={false} className={classes.root}>
       <Navbar />
+
 
       <Fade in={!loading}>
         <div className={classes.body}>
@@ -111,11 +131,12 @@ const MovieDetails = () => {
               <Typography variant="h6">
                 Runtime: {runtime} minutes
               </Typography>
+
             </div>
           </Slide>
+
         </div>
       </Fade>
-
     </Container>
   )
 }
