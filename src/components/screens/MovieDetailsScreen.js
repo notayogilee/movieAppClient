@@ -53,11 +53,19 @@ const useStyles = makeStyles({
   castContainer: {
     position: 'absolute',
     color: '#f4f4f4',
+    // backgroundColor: 'red',
     height: '80%',
-    width: '30%',
+    width: '55% !important',
     zIndex: '100',
     top: '15%',
-    left: '40%'
+    left: '40%',
+    overflowY: 'auto'
+  },
+  castItem: {
+    zIndex: '200',
+    color: '#fff',
+    width: '400px',
+    height: '200px'
   }
 });
 
@@ -85,6 +93,8 @@ const MovieDetails = () => {
     }
   } = stateMovieDetails;
 
+  console.log(cast.cast)
+  const { cast: movieCast } = cast;
   const rating = vote_average / 2;
 
   const location = useLocation();
@@ -100,7 +110,6 @@ const MovieDetails = () => {
   return (
     <Container maxWidth={false} className={classes.root}>
       <Navbar />
-
 
       <Fade in={!loading}>
         <div className={classes.body}>
@@ -131,9 +140,20 @@ const MovieDetails = () => {
               <Typography variant="h6">
                 Runtime: {runtime} minutes
               </Typography>
-
             </div>
           </Slide>
+          <Slide timeout={750} direction='left' in={!loading}>
+            <Grid container spacing={2} className={classes.castContainer}>
+
+              {movieCast && movieCast.length > 0 && movieCast.map((actor) => (
+                <Grid item key={actor.id} className={classes.castItem}>
+                  <ActorItem actor={actor} />
+                </Grid>
+              ))}
+            </Grid>
+          </Slide>
+
+
 
         </div>
       </Fade>

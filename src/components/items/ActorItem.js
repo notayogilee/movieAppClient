@@ -29,19 +29,30 @@ const ActorItem = ({ actor }) => {
   const actorSlug = slugify(actor.name)
 
   return (
-    <Card >
+    <Card style={{ background: 'transparent' }} elevation={0}>
       <CardActionArea>
-        <Link to={`/actors/${actorSlug}`} state={{ actor }}>
+        <Link to={`/actors/${actorSlug}`} state={{ actor }} style={{ display: 'flex', alignItems: 'center', textDecoration: 'none' }}>
           <CardMedia
             component="img"
+            style={typeof actor.character === 'string' ? { width: '110px' } : { width: '100%' }}
             src={actor.profile_path ? `https://www.themoviedb.org/t/p/w185${actor.profile_path}` : moviePoster}
             alt={actor.name}
           />
-          {actor.character &&
-            <CardContent>
-              <Typography>
-                {actor.name} plays {actor.character}
+          {typeof actor.character === 'string' &&
+            <CardContent style={{ color: '#f4f4f4' }}>
+              <Typography variant="h5">
+                {actor.name}
               </Typography>
+              {actor.character &&
+                <>
+                  <Typography variant="h6">
+                    as
+                  </Typography>
+                  <Typography variant="h5">
+                    {actor.character}
+                  </Typography>
+                </>
+              }
             </CardContent>
           }
         </Link>
