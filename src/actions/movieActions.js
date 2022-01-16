@@ -141,7 +141,6 @@ export const movieDetails = (movieId) => async (dispatch) => {
         id
         name  
         character
-        order
         profile_path
       }
       }

@@ -47,17 +47,17 @@ export const showListReducer = (state = { shows: [], page: 1, total_pages: 1 }, 
   }
 }
 
-export const showDetailsReducer = (state = { show: {} }, action) => {
+export const showDetailsReducer = (state = { showDetails: { details: {}, cast: [] } }, action) => {
   switch (action.type) {
     case SHOW_DETAILS_REQUEST:
       return {
         loading: true,
-        show: {}
+        showDetails: { details: {}, cast: [] }
       }
     case SHOW_DETAILS_SUCCESS:
       return {
         loading: false,
-        show: action.payload
+        showDetails: action.payload
       }
     case SHOW_DETAILS_FAIL:
       return {

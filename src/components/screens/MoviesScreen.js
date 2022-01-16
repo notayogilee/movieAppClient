@@ -90,7 +90,7 @@ const Movies = () => {
       {showToTopButton &&
         <ToTopButton />
       }
-    </Container >
+    </Container>
   )
 }
 

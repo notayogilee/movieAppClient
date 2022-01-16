@@ -48,7 +48,6 @@ const useStyles = makeStyles({
   },
   castContainer: {
     position: 'absolute',
-
     color: '#f4f4f4',
     height: '68%',
     width: 'auto !important',
@@ -144,7 +143,7 @@ const MovieDetails = () => {
           </Slide>
 
           <Slide timeout={750} direction='left' in={!loading}>
-            <Grid component="div" container spacing={2} id="cast" className={classes.castContainer}>
+            <Grid component="div" container spacing={2} className={classes.castContainer}>
               {movieCast && movieCast.length > 0 && movieCast.map((actor) => (
                 <Grid item key={actor.id} className={classes.castItem}>
                   <ActorItem actor={actor} />

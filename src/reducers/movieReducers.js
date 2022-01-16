@@ -45,7 +45,10 @@ export const movieListReducer = (state = { movies: [], page: 1, total_pages: 1 }
 export const movieDetailsReducer = (state = { movieDetails: { details: {}, cast: [] } }, action) => {
   switch (action.type) {
     case MOVIE_DETAILS_REQUEST:
-      return { loading: true, movieDetails: { details: {}, cast: [] } }
+      return {
+        loading: true,
+        movieDetails: { details: {}, cast: [] }
+      }
     case MOVIE_DETAILS_SUCCESS:
       return {
         loading: false,

@@ -28,7 +28,7 @@ const MovieItem = ({ movie }) => {
   const movieSlug = slugify(movie.title)
 
   return (
-    <Card >
+    <Card>
       <CardActionArea>
         <Link to={`/movies/${movieSlug}`} state={{ movie: movie }}>
           <CardMedia

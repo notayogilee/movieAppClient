@@ -103,19 +103,20 @@ export const listMoreShows = (page) => async (dispatch) => {
 }
 
 export const showDetails = (showId) => async (dispatch) => {
+
+  const restLink = new RestLink({ uri: `http://localhost:5000/api/shows/${showId}` });
+
+  const client = new ApolloClient({
+    cache: new InMemoryCache(),
+    link: restLink
+  });
+
   try {
     dispatch({ type: SHOW_DETAILS_REQUEST });
 
-    const restLink = new RestLink({ uri: `http://localhost:5000/api/shows/${showId}` });
-
-    const client = new ApolloClient({
-      cache: new InMemoryCache(),
-      link: restLink
-    });
-
     const query = gql`
       query Show {
-        show @rest(type: "Shows", path: "") {
+        details @rest(type: "Shows", path: "") {
           backdrop_path
           episode_run_time
           homepage
@@ -133,11 +134,27 @@ export const showDetails = (showId) => async (dispatch) => {
       }
     `;
 
-    const { data: { show } } = await client.query({ query });
+    const { data: { details } } = await client.query({ query });
+
+    const showCast = gql`
+    query ShowCast{
+      cast(id: showId) @rest(type: "Cast", path: "/credits") {
+        cast {
+          id
+          name
+          character
+          profile_path
+        }
+      }
+    }
+    `;
+
+    const { data: { cast } } = await client.query({ query: showCast });
+    const fullShowDetails = { details, cast }
 
     dispatch({
       type: SHOW_DETAILS_SUCCESS,
-      payload: show
+      payload: fullShowDetails
     })
   } catch (error) {
     dispatch({

@@ -67,16 +67,30 @@ const Shows = () => {
         TV Shows
       </Typography>
 
-      <Grid container justifyContent="center" alignItems="center" rowSpacing={2} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
+      <Grid
+        container
+        justifyContent="center"
+        alignItems="center"
+        rowSpacing={2}
+        columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
+
         {shows && shows.length > 0 && shows.map((show) => (
-          show.id && <ShowItem key={`${show.id}`} show={show} />
+          show.id &&
+          <Grid
+            item
+            key={`${show.id}`}
+            width={278}
+            height={500}
+          >
+            <ShowItem show={show} />
+          </Grid>
         )
         )}
       </Grid>
       {showToTopButton &&
         <ToTopButton />
       }
-    </Container >
+    </Container>
   )
 }
 

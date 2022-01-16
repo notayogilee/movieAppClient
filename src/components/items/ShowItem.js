@@ -1,7 +1,9 @@
 import { Link } from 'react-router-dom';
 import slugify from 'react-slugify';
 import {
-  Grid,
+  Card,
+  CardActionArea,
+  CardMedia,
   Typography
 } from '@mui/material';
 import { makeStyles } from '@mui/styles';
@@ -26,18 +28,17 @@ const ShowItem = ({ show }) => {
   const showSlug = slugify(show.name);
 
   return (
-    <Grid item maxWidth={300} >
-      <Link to={`/shows/${showSlug}`} state={{ show: show }}>
-        {show.poster_path ? (
-          <img src={`https://www.themoviedb.org/t/p/w185/${show.poster_path}`} width="185" height="278" alt={show.name} />
-        ) : (
-          <div className={classes.posterContainer}>
-            <img src={moviePoster} width="185" height="278" alt={show.name} />
-            <Typography variant="h4" textAlign="center" className={classes.posterText}>{show.name}</Typography>
-          </div>
-        )}
-      </Link>
-    </Grid>
+    <Card>
+      <CardActionArea>
+        <Link to={`/shows/${showSlug}`} state={{ show: show }}>
+          <CardMedia
+            component="img"
+            src={show.poster_path ? `https://www.themoviedb.org/t/p/w185/${show.poster_path}` : moviePoster}
+            alt={show.name}
+          />
+        </Link>
+      </CardActionArea>
+    </Card>
   )
 
 }
