@@ -11,11 +11,7 @@ import {
   Rating,
   Fade,
   Slide,
-  Grid,
-  Card,
-  CardMedia,
-  CardContent,
-  CardActionArea
+  Grid
 } from '@mui/material';
 import { makeStyles } from '@mui/styles';
 
@@ -52,17 +48,20 @@ const useStyles = makeStyles({
   },
   castContainer: {
     position: 'absolute',
+
     color: '#f4f4f4',
-    // backgroundColor: 'red',
-    height: '80%',
-    width: '55% !important',
+    height: '68%',
+    width: 'auto !important',
     zIndex: '100',
-    top: '15%',
+    top: '22.5%',
     left: '40%',
-    overflowY: 'auto'
+    overflowY: 'auto',
+    '&::-webkit-scrollbar': {
+      display: 'none'
+    }
   },
   castItem: {
-    zIndex: '200',
+    zIndex: '100',
     color: '#fff',
     width: '400px',
     height: '200px'
@@ -93,7 +92,6 @@ const MovieDetails = () => {
     }
   } = stateMovieDetails;
 
-  console.log(cast.cast)
   const { cast: movieCast } = cast;
   const rating = vote_average / 2;
 
@@ -112,8 +110,10 @@ const MovieDetails = () => {
       <Navbar />
 
       <Fade in={!loading}>
+
         <div className={classes.body}>
           <img className={classes.image} src={`https://www.themoviedb.org/t/p/original${backdrop_path}`} />
+
           <Slide timeout={750} direction='right' in={!loading}>
             <div className={classes.content}>
               <Typography variant="h3">
@@ -142,9 +142,9 @@ const MovieDetails = () => {
               </Typography>
             </div>
           </Slide>
-          <Slide timeout={750} direction='left' in={!loading}>
-            <Grid container spacing={2} className={classes.castContainer}>
 
+          <Slide timeout={750} direction='left' in={!loading}>
+            <Grid component="div" container spacing={2} id="cast" className={classes.castContainer}>
               {movieCast && movieCast.length > 0 && movieCast.map((actor) => (
                 <Grid item key={actor.id} className={classes.castItem}>
                   <ActorItem actor={actor} />
@@ -153,10 +153,9 @@ const MovieDetails = () => {
             </Grid>
           </Slide>
 
-
-
         </div>
       </Fade>
+
     </Container>
   )
 }

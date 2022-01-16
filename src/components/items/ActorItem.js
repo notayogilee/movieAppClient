@@ -35,7 +35,7 @@ const ActorItem = ({ actor }) => {
           <CardMedia
             component="img"
             style={typeof actor.character === 'string' ? { width: '110px' } : { width: '100%' }}
-            src={actor.profile_path ? `https://www.themoviedb.org/t/p/w185${actor.profile_path}` : moviePoster}
+            src={actor.profile_path ? `https://www.themoviedb.org/t/p/w154${actor.profile_path}` : moviePoster}
             alt={actor.name}
           />
           {typeof actor.character === 'string' &&
