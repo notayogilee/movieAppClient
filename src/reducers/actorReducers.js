@@ -47,17 +47,17 @@ export const actorListReducer = (state = { actors: [], page: 1, total_pages: 1 }
   }
 }
 
-export const actorDetailsReducer = (state = { actor: {} }, action) => {
+export const actorDetailsReducer = (state = { actorDetails: { details: {}, actorImages: [], movieCredits: [], showCredits: [] } }, action) => {
   switch (action.type) {
     case ACTOR_DETAILS_REQUEST:
       return {
         loading: true,
-        actor: {}
+        actorDetails: { details: {}, actorImages: [], movieCredits: [], showCredits: [] }
       }
     case ACTOR_DETAILS_SUCCESS:
       return {
         loading: false,
-        actor: action.payload
+        actorDetails: action.payload
       }
     case ACTOR_DETAILS_FAIL:
       return {

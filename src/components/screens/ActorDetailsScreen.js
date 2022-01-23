@@ -41,14 +41,19 @@ const ActorDetails = () => {
 
   const {
     loading,
-    actor: {
-      biography,
-      birthday,
-      deathday,
-      id,
-      imdb_id,
-      name,
-      profile_path
+    actorDetails: {
+      details: {
+        biography,
+        birthday,
+        deathday,
+        id,
+        imdb_id,
+        name,
+        profile_path
+      },
+      actorImages,
+      movieCredits,
+      showCredits
     }
 
   } = stateActorDetails;

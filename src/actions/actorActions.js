@@ -96,34 +96,89 @@ export const listMoreActors = (page) => async (dispatch) => {
 }
 
 export const actorDetails = (actorId) => async (dispatch) => {
+  const restLink = new RestLink({ uri: `http://localhost:5000/api/actors/${actorId}` });
+  const client = new ApolloClient({
+    cache: new InMemoryCache(),
+    link: restLink
+  });
+
   try {
     dispatch({ type: ACTOR_DETAILS_REQUEST });
 
-    const restLink = new RestLink({ uri: `http://localhost:5000/api/actors/${actorId}` });
-    const client = new ApolloClient({
-      cache: new InMemoryCache(),
-      link: restLink
-    });
-
-    const query = gql`
-      query Actor {
-        actor @rest(type: "Actors", path: "") {
+    // main details
+    const actorDetails = gql`
+      query ActorDetails {
+        details @rest(type: "Actors", path: "") {
           biography
           birthday
           deathday
+          place_of_birth
           id
           imdb_id
+          homepage
           name
           profile_path
         }
       }
     `;
 
-    const { data: { actor } } = await client.query({ query });
+    const { data: { details } } = await client.query({ query: actorDetails });
+
+    // movie credits
+    const actorMovieCredits = gql`
+      query ActorMovieCredits {
+        movieCredits(id:actorId) @rest(type: "ActorMovies", path: "/movies") {
+          cast {
+            id
+            title
+            character
+            release_date
+            poster_path
+          }
+        }
+      }
+    `;
+
+    const { data: { movieCredits } } = await client.query({ query: actorMovieCredits });
+
+    // tv show credits
+    const actorShowCredits = gql`
+    query ActorShowCredits {
+      showCredits(id:actorId) @rest(type: "ActorShows", path: "/shows") {
+        cast {
+          id
+          name
+          character
+          first_air_date
+          poster_path
+        }
+      }
+    }
+  `;
+
+    const { data: { showCredits } } = await client.query({ query: actorShowCredits });
+
+    // actor images
+    const extraActorImages = gql`
+    query ActorImages {
+      actorImages(id:actorId) @rest(type: "ActorImages", path: "/images") {
+        profiles{
+          height
+          width
+          aspect_ratio
+          file_path
+        }
+      }
+    }
+  `;
+
+    const { data: { actorImages } } = await client.query({ query: extraActorImages });
+
+    const fullActorDetails = { details, actorImages, movieCredits, showCredits }
 
     dispatch({
       type: ACTOR_DETAILS_SUCCESS,
-      payload: actor
+      payload: fullActorDetails
     })
   } catch (error) {
     dispatch({
