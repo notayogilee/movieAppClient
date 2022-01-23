@@ -54,10 +54,7 @@ const useStyles = makeStyles({
     zIndex: '100',
     top: '22.5%',
     left: '40%',
-    overflowY: 'auto',
-    '&::-webkit-scrollbar': {
-      display: 'none'
-    }
+    overflowY: 'auto'
   },
   castItem: {
     zIndex: '100',
