@@ -4,6 +4,7 @@ import { useLocation } from 'react-router-dom';
 import { actorDetails } from '../../actions/actorActions';
 import Navbar from '../utils/Navbar';
 import MovieItem from '../items/MovieItem';
+import ShowItem from '../items/ShowItem';
 import {
   Container,
   Typography,
@@ -31,19 +32,25 @@ const useStyles = makeStyles({
     top: '15%',
     left: '3%'
   },
-  // image: {
-  //   // position: 'absolute',
-  //   width: '35%!important',
-  //   height: '35%',
-
-  // },
-  // details: {
-  //   display: 'flex',
-  //   flexDirection: 'column'
-  // },
-  // bio: {
-
-  // },
+  images: {
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'space-evenly',
+    alignItems: 'center',
+    width: '100%',
+    maxHeight: '450px',
+    overflowY: 'scroll'
+  },
+  castContainer: {
+    position: 'absolute',
+    color: '#f4f4f4',
+    height: '68%',
+    width: 'auto !important',
+    zIndex: '100',
+    top: '22.5%',
+    left: '50%',
+    overflowY: 'auto'
+  },
   body: {
     height: '100vh',
     width: '100vw',
@@ -77,7 +84,9 @@ const ActorDetails = () => {
   } = stateActorDetails;
 
   const { profiles } = actorImages;
-  console.log(profiles)
+  const { cast: movieCast } = movieCredits;
+  const { cast: showCast } = showCredits;
+  console.log(showCast)
 
   const location = useLocation();
   const { actor } = location.state;
@@ -101,7 +110,7 @@ const ActorDetails = () => {
             <div className={classes.content}>
               <div style={{ display: 'flex', }}>
                 <img height="450" width="300" src={`https://www.themoviedb.org/t/p/original${profile_path}`} />
-                <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-evenly', alignItems: 'center', width: '100%' }}>
+                <div className={classes.images}>
                   {profiles && profiles.map((extraImage) => (
                     <img key={extraImage.file_path} height="150" width="100" src={`https://www.themoviedb.org/t/p/original${extraImage.file_path}`} />
                   ))
@@ -128,6 +137,46 @@ const ActorDetails = () => {
             </div>
           </Slide>
 
+          <Slide timeout={750} direction='left' in={!loading}>
+            <div className={classes.castContainer}>
+              {movieCast &&
+                <Typography variant="h4" textAlign="center">Movies</Typography>
+              }
+              <Grid component="div" container spacing={2} >
+
+                {movieCast && movieCast.map((movie) => (
+                  <Grid
+                    item
+                    key={movie.id}
+                    className={classes.castItem}
+                    width={185}
+                    height={278}
+                  >
+                    <MovieItem movie={movie} />
+                  </Grid>
+                ))}
+              </Grid>
+
+              {showCast &&
+                <Typography variant="h4" textAlign="center">TV Shows</Typography>
+              }
+              <Grid component="div" container spacing={2} >
+
+                {showCast && showCast.map((show) => (
+                  <Grid
+                    item
+                    key={show.id}
+                    className={classes.castItem}
+                    width={185}
+                    height={278}
+                  >
+                    <ShowItem show={show} />
+                  </Grid>
+                ))}
+              </Grid>
+            </div>
+
+          </Slide>
 
 
         </div>
