@@ -148,7 +148,6 @@ export const actorDetails = (actorId) => async (dispatch) => {
 
     const { data: { movieCredits } } = await client.query({ query: actorMovieCredits });
 
-    console.log(movieCredits)
     const censoredMovieCredits = { ...movieCredits, cast: movieCredits.cast.filter((movie) => !movie.adult) };
 
     // tv show credits

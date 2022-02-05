@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useLocation } from 'react-router-dom';
 import { actorDetails } from '../../actions/actorActions';
@@ -14,6 +14,7 @@ import {
   Box
 } from '@mui/material';
 import { makeStyles } from '@mui/styles';
+import moviePoster from '../img/anika-mikkelson.jpg';
 
 const useStyles = makeStyles({
   root: {
@@ -39,7 +40,8 @@ const useStyles = makeStyles({
     alignItems: 'center',
     width: '100%',
     maxHeight: '450px',
-    overflowY: 'scroll'
+    overflowY: 'scroll',
+    cursor: 'pointer'
   },
   castContainer: {
     position: 'absolute',
@@ -64,8 +66,6 @@ const ActorDetails = () => {
   const classes = useStyles();
 
   const stateActorDetails = useSelector(state => state.actorDetails);
-
-  console.log(stateActorDetails)
 
   const {
     loading,
@@ -99,6 +99,8 @@ const ActorDetails = () => {
     fetchActorDetails()
   }, [])
 
+  const [mainImage, setMainImage] = useState('');
+
   return (
     <Container maxWidth={false} className={classes.root}>
       <Navbar />
@@ -110,10 +112,16 @@ const ActorDetails = () => {
 
             <div className={classes.content}>
               <div style={{ display: 'flex', }}>
-                <img height="450" width="300" src={`https://www.themoviedb.org/t/p/original${profile_path}`} />
+                <img height="450" width="300" src={mainImage ? mainImage : profile_path ? `https://www.themoviedb.org/t/p/original${profile_path}` : moviePoster} />
                 <div className={classes.images}>
                   {profiles && profiles.map((extraImage) => (
-                    <img key={extraImage.file_path} height="150" width="100" src={`https://www.themoviedb.org/t/p/original${extraImage.file_path}`} />
+
+                    <img
+                      onClick={() => setMainImage(`https://www.themoviedb.org/t/p/original${extraImage.file_path}`)}
+                      key={extraImage.file_path}
+                      height="150"
+                      width="100"
+                      src={`https://www.themoviedb.org/t/p/original${extraImage.file_path}`} />
                   ))
                   }
                 </div>
