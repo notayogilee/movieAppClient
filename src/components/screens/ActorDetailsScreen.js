@@ -65,6 +65,8 @@ const ActorDetails = () => {
 
   const stateActorDetails = useSelector(state => state.actorDetails);
 
+  console.log(stateActorDetails)
+
   const {
     loading,
     actorDetails: {
@@ -78,15 +80,14 @@ const ActorDetails = () => {
         profile_path
       },
       actorImages,
-      movieCredits,
+      censoredMovieCredits,
       showCredits
     }
   } = stateActorDetails;
 
   const { profiles } = actorImages;
-  const { cast: movieCast } = movieCredits;
+  const { cast: movieCast } = censoredMovieCredits;
   const { cast: showCast } = showCredits;
-  console.log(showCast)
 
   const location = useLocation();
   const { actor } = location.state;

@@ -7,10 +7,7 @@ import {
   MORE_MOVIE_LIST_FAIL,
   MOVIE_DETAILS_REQUEST,
   MOVIE_DETAILS_SUCCESS,
-  MOVIE_DETAILS_FAIL,
-  // MOVIE_CAST_REQUEST,
-  // MOVIE_CAST_SUCCESS,
-  // MOVIE_CAST_FAIL
+  MOVIE_DETAILS_FAIL
 } from '../constants/movieConstants';
 import { ApolloClient, InMemoryCache } from '@apollo/client';
 import { RestLink } from 'apollo-link-rest';
@@ -37,6 +34,7 @@ export const listMovies = () => async (dispatch) => {
           results {
             id
             title 
+            adult
             poster_path
             vote_average
             vote_count
@@ -47,9 +45,11 @@ export const listMovies = () => async (dispatch) => {
 
     const { data: { movies } } = await client.query({ query });
 
+    const censoredMovies = { ...movies, results: movies.results.filter((movie) => !movie.adult) };
+
     dispatch({
       type: MOVIE_LIST_SUCCESS,
-      payload: movies
+      payload: censoredMovies
     })
   } catch (error) {
     dispatch({
@@ -81,6 +81,7 @@ export const listMoreMovies = (page) => async (dispatch) => {
           results {
             id
             title 
+            adult
             poster_path
             vote_average
             vote_count
@@ -91,9 +92,11 @@ export const listMoreMovies = (page) => async (dispatch) => {
 
     const { data: { movies } } = await client.query({ query });
 
+    const censoredMovies = { ...movies, results: movies.results.filter((movie) => !movie.adult) };
+
     dispatch({
       type: MORE_MOVIE_LIST_SUCCESS,
-      payload: movies
+      payload: censoredMovies
     })
   } catch (error) {
     dispatch({
@@ -120,6 +123,7 @@ export const movieDetails = (movieId) => async (dispatch) => {
   query MovieDetails{
     details(id: movieId) @rest(type: "Details", path: "") {
       title
+      adult
       vote_average
       vote_count
       tagline

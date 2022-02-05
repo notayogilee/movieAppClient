@@ -47,12 +47,12 @@ export const actorListReducer = (state = { actors: [], page: 1, total_pages: 1 }
   }
 }
 
-export const actorDetailsReducer = (state = { actorDetails: { details: {}, actorImages: [], movieCredits: [], showCredits: [] } }, action) => {
+export const actorDetailsReducer = (state = { actorDetails: { details: {}, actorImages: [], censoredMovieCredits: [], showCredits: [] } }, action) => {
   switch (action.type) {
     case ACTOR_DETAILS_REQUEST:
       return {
         loading: true,
-        actorDetails: { details: {}, actorImages: [], movieCredits: [], showCredits: [] }
+        actorDetails: { details: {}, actorImages: [], censoredMovieCredits: [], showCredits: [] }
       }
     case ACTOR_DETAILS_SUCCESS:
       return {

@@ -35,6 +35,7 @@ export const listActors = () => async (dispatch) => {
             id
             name
             profile_path
+            adult
           }
         }
       }
@@ -42,9 +43,11 @@ export const listActors = () => async (dispatch) => {
 
     const { data: { actors } } = await client.query({ query });
 
+    const censoredActors = { ...actors, results: actors.results.filter((actor) => !actor.adult) };
+
     dispatch({
       type: ACTOR_LIST_SUCCESS,
-      payload: actors
+      payload: censoredActors
     })
   } catch (error) {
     dispatch({
@@ -74,6 +77,7 @@ export const listMoreActors = (page) => async (dispatch) => {
             id
             name
             profile_path
+            adult
           }
         }
       }
@@ -81,9 +85,11 @@ export const listMoreActors = (page) => async (dispatch) => {
 
     const { data: { actors } } = await client.query({ query });
 
+    const censoredActors = { ...actors, results: actors.results.filter((actor) => !actor.adult) };
+
     dispatch({
       type: MORE_ACTOR_LIST_SUCCESS,
-      payload: actors
+      payload: censoredActors
     })
   } catch (error) {
     dispatch({
@@ -134,12 +140,16 @@ export const actorDetails = (actorId) => async (dispatch) => {
             character
             release_date
             poster_path
+            adult
           }
         }
       }
     `;
 
     const { data: { movieCredits } } = await client.query({ query: actorMovieCredits });
+
+    console.log(movieCredits)
+    const censoredMovieCredits = { ...movieCredits, cast: movieCredits.cast.filter((movie) => !movie.adult) };
 
     // tv show credits
     const actorShowCredits = gql`
@@ -174,7 +184,7 @@ export const actorDetails = (actorId) => async (dispatch) => {
 
     const { data: { actorImages } } = await client.query({ query: extraActorImages });
 
-    const fullActorDetails = { details, actorImages, movieCredits, showCredits }
+    const fullActorDetails = { details, actorImages, censoredMovieCredits, showCredits }
 
     dispatch({
       type: ACTOR_DETAILS_SUCCESS,
