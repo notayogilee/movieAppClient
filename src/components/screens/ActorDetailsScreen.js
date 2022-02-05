@@ -131,9 +131,11 @@ const ActorDetails = () => {
                 <Typography style={{ display: 'inline-block' }} variant="h4">
                   {name}
                 </Typography>
-                <Typography variant="h5">
-                  Born: {birthday}
-                </Typography>
+                {birthday &&
+                  <Typography variant="h5">
+                    Born: {birthday}
+                  </Typography>
+                }
                 {deathday &&
                   <Typography variant="h5">
                     Died: {deathday}
@@ -159,9 +161,14 @@ const ActorDetails = () => {
                     key={movie.id}
                     className={classes.castItem}
                     width={185}
-                    height={278}
+                    height={320}
                   >
                     <MovieItem movie={movie} />
+                    {movie.character &&
+                      <Typography variant="h6" sx={{ m: 1 }}>
+                        as {movie.character}
+                      </Typography>
+                    }
                   </Grid>
                 ))}
               </Grid>
