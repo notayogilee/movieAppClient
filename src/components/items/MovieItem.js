@@ -23,7 +23,7 @@ const useStyles = makeStyles({
   }
 })
 
-const MovieItem = ({ movie }) => {
+const MovieItem = ({ movie, imgWidth, imgHeight }) => {
   const classes = useStyles();
   const movieSlug = slugify(movie.title)
 
@@ -33,6 +33,8 @@ const MovieItem = ({ movie }) => {
         <Link to={`/movies/${movieSlug}`} state={{ movie: movie }}>
           <CardMedia
             component="img"
+            width={imgWidth}
+            height={imgHeight}
             src={movie.poster_path ? `https://www.themoviedb.org/t/p/w185/${movie.poster_path}` : moviePoster}
             alt={movie.title}
           />

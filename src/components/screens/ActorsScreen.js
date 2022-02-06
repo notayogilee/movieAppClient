@@ -70,7 +70,7 @@ const Actors = () => {
       <Grid container justifyContent="center" alignItems="center" rowSpacing={2} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
         {actors && actors.length > 0 && actors.map((actor) => (
           actor.id && <Grid item key={`${actor.id}`} width={278} height={500}>
-            <ActorItem actor={actor} />
+            <ActorItem actor={actor} imgWidth={278} imgHeight={400} />
           </Grid>
         )
         )}

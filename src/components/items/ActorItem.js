@@ -24,7 +24,7 @@ const useStyles = makeStyles({
   }
 })
 
-const ActorItem = ({ actor }) => {
+const ActorItem = ({ actor, imgWidth, imgHeight }) => {
   const classes = useStyles();
   const actorSlug = slugify(actor.name)
 
@@ -35,6 +35,8 @@ const ActorItem = ({ actor }) => {
           <CardMedia
             component="img"
             style={typeof actor.character === 'string' ? { width: '110px' } : { width: '100%' }}
+            width={imgWidth}
+            height={imgHeight}
             src={actor.profile_path ? `https://www.themoviedb.org/t/p/w154${actor.profile_path}` : moviePoster}
             alt={actor.name}
           />

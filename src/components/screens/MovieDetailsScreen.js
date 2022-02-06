@@ -118,15 +118,17 @@ const MovieDetails = () => {
               <Typography variant="h4">
                 {tagline}
               </Typography>
-              <div style={{ display: 'flex', alignItems: 'center' }}>
-                <Rating
-                  value={rating}
-                  precision={0.1}
-                  size="small"
-                  readOnly
-                />
-                <Typography ml={1} component="span" variant="h6"> based on {vote_count} votes</Typography>
-              </div>
+              {vote_count !== 0 &&
+                <div style={{ display: 'flex', alignItems: 'center' }}>
+                  <Rating
+                    value={rating}
+                    precision={0.1}
+                    size="small"
+                    readOnly
+                  />
+                  <Typography ml={1} component="span" variant="h6"> based on {vote_count} votes</Typography>
+                </div>
+              }
               <Typography mt={4} variant="h5">
                 {overview}
               </Typography>
@@ -143,7 +145,7 @@ const MovieDetails = () => {
             <Grid component="div" container spacing={2} className={classes.castContainer}>
               {movieCast && movieCast.length > 0 && movieCast.map((actor) => (
                 <Grid item key={actor.id} className={classes.castItem}>
-                  <ActorItem actor={actor} />
+                  <ActorItem actor={actor} imgWidth={110} imgHeight={160} />
                 </Grid>
               ))}
             </Grid>

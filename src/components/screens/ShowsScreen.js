@@ -82,7 +82,7 @@ const Shows = () => {
             width={278}
             height={500}
           >
-            <ShowItem show={show} />
+            <ShowItem show={show} imgWidth={278} imgHeight={400} />
           </Grid>
         )
         )}

@@ -83,7 +83,7 @@ const Movies = () => {
             key={`${movie.id}`}
             width={278}
             height={500}>
-            <MovieItem movie={movie} />
+            <MovieItem movie={movie} imgWidth={278} imgHeight={400} />
           </Grid>
         ))}
       </Grid>

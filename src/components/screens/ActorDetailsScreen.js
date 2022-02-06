@@ -161,11 +161,11 @@ const ActorDetails = () => {
                     key={movie.id}
                     className={classes.castItem}
                     width={185}
-                    height={320}
+                    height={400}
                   >
-                    <MovieItem movie={movie} />
+                    <MovieItem movie={movie} imgWidth={185} imgHeight={278} />
                     {movie.character &&
-                      <Typography variant="h6" sx={{ m: 1 }}>
+                      <Typography variant="h6" sx={{ m: 1 }} >
                         as {movie.character}
                       </Typography>
                     }
@@ -186,7 +186,7 @@ const ActorDetails = () => {
                     width={185}
                     height={278}
                   >
-                    <ShowItem show={show} />
+                    <ShowItem show={show} imgWidth={185} imgHeight={278} />
                   </Grid>
                 ))}
               </Grid>

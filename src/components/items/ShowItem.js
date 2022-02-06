@@ -23,7 +23,7 @@ const useStyles = makeStyles({
   }
 })
 
-const ShowItem = ({ show }) => {
+const ShowItem = ({ show, imgWidth, imgHeight }) => {
   const classes = useStyles();
   const showSlug = slugify(show.name);
 
@@ -33,6 +33,8 @@ const ShowItem = ({ show }) => {
         <Link to={`/shows/${showSlug}`} state={{ show: show }}>
           <CardMedia
             component="img"
+            width={imgWidth}
+            height={imgHeight}
             src={show.poster_path ? `https://www.themoviedb.org/t/p/w185/${show.poster_path}` : moviePoster}
             alt={show.name}
           />

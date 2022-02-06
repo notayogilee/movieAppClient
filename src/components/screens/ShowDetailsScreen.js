@@ -132,9 +132,11 @@ const ShowDetails = () => {
               <Typography variant="h6">
                 {number_of_episodes} episodes
               </Typography>
+
               <Typography variant="h6">
                 Runtime: {episode_run_time} minutes
               </Typography>
+
             </div>
           </Slide>
 
