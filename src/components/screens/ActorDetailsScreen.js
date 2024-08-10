@@ -1,71 +1,64 @@
-import { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { useLocation } from 'react-router-dom';
-import { actorDetails } from '../../actions/actorActions';
-import Navbar from '../utils/Navbar';
-import MovieItem from '../items/MovieItem';
-import ShowItem from '../items/ShowItem';
-import {
-  Container,
-  Typography,
-  Fade,
-  Slide,
-  Grid,
-  Box
-} from '@mui/material';
-import { makeStyles } from '@mui/styles';
-import moviePoster from '../img/anika-mikkelson.jpg';
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useLocation } from "react-router-dom";
+import { actorDetails } from "../../actions/actorActions";
+import Moment from "react-moment";
+import Navbar from "../utils/Navbar";
+import MovieItem from "../items/MovieItem";
+import ShowItem from "../items/ShowItem";
+import { Container, Typography, Fade, Slide, Grid, Box } from "@mui/material";
+import { makeStyles } from "@mui/styles";
+import moviePoster from "../img/anika-mikkelson.jpg";
 
 const useStyles = makeStyles({
   root: {
-    position: 'relative',
-    width: '100%',
-    margin: '0',
-    padding: '0 !important'
+    position: "relative",
+    width: "100%",
+    margin: "0",
+    padding: "0 !important",
   },
   content: {
-    position: 'absolute',
-    display: 'flex',
-    flexDirection: 'column',
-    color: '#f4f4f4',
-    height: '80%',
-    width: '40%',
-    top: '15%',
-    left: '3%'
+    // position: "absolute",
+    // display: "flex",
+    // flexDirection: "column",
+    // color: "#f4f4f4",
+    // height: "80%",
+    // width: "40%",
+    // top: "15%",
+    // left: "3%",
   },
   images: {
-    display: 'flex',
-    flexDirection: 'column',
-    justifyContent: 'space-evenly',
-    alignItems: 'center',
-    width: '100%',
-    maxHeight: '450px',
-    overflowY: 'scroll',
-    cursor: 'pointer'
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "space-evenly",
+    alignItems: "center",
+    width: "100%",
+    maxHeight: "450px",
+    overflowY: "scroll",
+    cursor: "pointer",
   },
   castContainer: {
-    position: 'absolute',
-    color: '#f4f4f4',
-    height: '68%',
-    width: 'auto !important',
-    zIndex: '100',
-    top: '22.5%',
-    left: '50%',
-    overflowY: 'auto'
+    // position: "absolute",
+    // color: "#f4f4f4",
+    // height: "68%",
+    // width: "auto !important",
+    // zIndex: "100",
+    // top: "22.5%",
+    // left: "50%",
+    // overflowY: "auto",
   },
   body: {
-    height: '100vh',
-    width: '100vw',
-    margin: '0'
+    // height: "100vh",
+    // width: "100vw",
+    // margin: "0",
   },
-
 });
 
 const ActorDetails = () => {
   const dispatch = useDispatch();
   const classes = useStyles();
 
-  const stateActorDetails = useSelector(state => state.actorDetails);
+  const stateActorDetails = useSelector((state) => state.actorDetails);
 
   const {
     loading,
@@ -77,12 +70,12 @@ const ActorDetails = () => {
         id,
         imdb_id,
         name,
-        profile_path
+        profile_path,
       },
       actorImages,
       censoredMovieCredits,
-      showCredits
-    }
+      showCredits,
+    },
   } = stateActorDetails;
 
   const { profiles } = actorImages;
@@ -94,68 +87,82 @@ const ActorDetails = () => {
 
   useEffect(() => {
     const fetchActorDetails = async () => {
-      await dispatch(actorDetails(actor.id))
-    }
-    fetchActorDetails()
-  }, [])
+      await dispatch(actorDetails(actor.id));
+    };
+    fetchActorDetails();
+  }, []);
 
-  const [mainImage, setMainImage] = useState('');
+  const [mainImage, setMainImage] = useState("");
 
   return (
-    <Container maxWidth={false} className={classes.root}>
+    <Container className={classes.root}>
       <Navbar />
 
       <Fade in={!loading}>
         <div className={classes.body}>
-
-          <Slide timeout={750} direction='right' in={!loading}>
-
-            <div className={classes.content}>
-              <div style={{ display: 'flex', }}>
-                <img height="450" width="300" src={mainImage ? mainImage : profile_path ? `https://www.themoviedb.org/t/p/original${profile_path}` : moviePoster} />
-                <div className={classes.images}>
-                  {profiles && profiles.map((extraImage) => (
-
+          {/* <Slide timeout={750} direction="right" in={!loading}> */}
+          <div className={classes.content}>
+            <div style={{ display: "flex" }}>
+              <img
+                height="450"
+                width="300"
+                src={
+                  mainImage
+                    ? mainImage
+                    : profile_path
+                    ? `https://www.themoviedb.org/t/p/original${profile_path}`
+                    : moviePoster
+                }
+              />
+              <div
+                className={
+                  profiles && profiles.length > 1 ? classes.images : "hidden"
+                }
+              >
+                {profiles &&
+                  profiles.map((extraImage) => (
                     <img
-                      onClick={() => setMainImage(`https://www.themoviedb.org/t/p/original${extraImage.file_path}`)}
+                      onClick={() =>
+                        setMainImage(
+                          `https://www.themoviedb.org/t/p/original${extraImage.file_path}`
+                        )
+                      }
                       key={extraImage.file_path}
                       height="150"
                       width="100"
-                      src={`https://www.themoviedb.org/t/p/original${extraImage.file_path}`} />
-                  ))
-                  }
-                </div>
-              </div>
-
-              <div>
-                <Typography style={{ display: 'inline-block' }} variant="h4">
-                  {name}
-                </Typography>
-                {birthday &&
-                  <Typography variant="h5">
-                    Born: {birthday}
-                  </Typography>
-                }
-                {deathday &&
-                  <Typography variant="h5">
-                    Died: {deathday}
-                  </Typography>
-                }
-                <Typography variant="h6">
-                  {biography}
-                </Typography>
+                      src={`https://www.themoviedb.org/t/p/original${extraImage.file_path}`}
+                    />
+                  ))}
               </div>
             </div>
-          </Slide>
 
-          <Slide timeout={750} direction='left' in={!loading}>
-            <div className={classes.castContainer}>
+            <div>
+              <Typography style={{ display: "inline-block" }} variant="h4">
+                {name}
+              </Typography>
+              {birthday && (
+                <Typography variant="h5">
+                  Born:&nbsp; <Moment format="DD MMMM YYYY">{birthday}</Moment>
+                </Typography>
+              )}
+              {deathday && (
+                <Typography variant="h5">Died: {deathday}</Typography>
+              )}
+              <Typography variant="h6">{biography}</Typography>
+            </div>
+          </div>
+          {/* </Slide> */}
+
+          {/* <Slide timeout={750} direction="left" in={!loading}> */}
+          <div className={classes.castContainer}>
+            {movieCast && (
+              <Typography variant="h4" textAlign="center">
+                Movies
+              </Typography>
+            )}
+            <Grid component="div" container spacing={2}>
               {movieCast &&
-                <Typography variant="h4" textAlign="center">Movies</Typography>
-              }
-              <Grid component="div" container spacing={2} >
-
-                {movieCast && movieCast.map((movie) => (
+                movieCast.map((movie) => (
                   <Grid
                     item
                     key={movie.id}
@@ -164,21 +171,23 @@ const ActorDetails = () => {
                     height={400}
                   >
                     <MovieItem movie={movie} imgWidth={185} imgHeight={278} />
-                    {movie.character &&
-                      <Typography variant="h6" sx={{ m: 1 }} >
+                    {movie.character && (
+                      <Typography variant="h6" sx={{ m: 1 }}>
                         as {movie.character}
                       </Typography>
-                    }
+                    )}
                   </Grid>
                 ))}
-              </Grid>
+            </Grid>
 
+            {showCast && (
+              <Typography variant="h4" textAlign="center">
+                TV Shows
+              </Typography>
+            )}
+            <Grid component="div" container spacing={2}>
               {showCast &&
-                <Typography variant="h4" textAlign="center">TV Shows</Typography>
-              }
-              <Grid component="div" container spacing={2} >
-
-                {showCast && showCast.map((show) => (
+                showCast.map((show) => (
                   <Grid
                     item
                     key={show.id}
@@ -189,17 +198,13 @@ const ActorDetails = () => {
                     <ShowItem show={show} imgWidth={185} imgHeight={278} />
                   </Grid>
                 ))}
-              </Grid>
-            </div>
-
-          </Slide>
-
-
+            </Grid>
+          </div>
+          {/* </Slide> */}
         </div>
       </Fade>
-
     </Container>
-  )
-}
+  );
+};
 
 export default ActorDetails;
