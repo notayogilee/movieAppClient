@@ -5,39 +5,19 @@ import Moment from "react-moment";
 import { movieDetails } from "../../actions/movieActions";
 import Navbar from "../utils/Navbar";
 import ActorItem from "../items/ActorItem";
-import ActorChip from "../chips/ActorChip";
-import {
-  Container,
-  Typography,
-  Rating,
-  Fade,
-  Slide,
-  Grid,
-  Box,
-} from "@mui/material";
+import { Container, Typography, Rating, Fade, Grid, Box } from "@mui/material";
 import { makeStyles } from "@mui/styles";
 
 const useStyles = makeStyles({
   root: {
     color: "#f4f4f4",
-    // overflow: "hidden",
-    // position: "relative",
-    // width: "100%",
-    // margin: "0",
-    // padding: "0 !important",
   },
   container: {
     marginTop: "100px !important",
-    // display: "flex",
-    // flexDirection: "column",
   },
   image: {
-    // pointerEvents: "none",
-    // position: "absolute",
     width: "100%",
     height: "auto",
-    // opacity: "0.4",
-    // zIndex: "-1",
   },
 
   headerImage: {
@@ -52,31 +32,9 @@ const useStyles = makeStyles({
     background:
       "linear-gradient(90deg, rgba(0,0,0,1) 0%, rgba(212,210,210,0.1) 100%)",
   },
-  content: {
-    // position: "absolute",
-    // color: "#f4f4f4",
-    // height: "80%",
-    // width: "30%",
-    // zIndex: "100",
-    // top: "15%",
-    // left: "3%",
-  },
-  castContainer: {
-    // position: "absolute",
-    // color: "#f4f4f4",
-    // height: "68%",
-    // width: "auto !important",
-    // zIndex: "100",
-    // top: "22.5%",
-    // left: "40%",
-    // overflowY: "auto",
-  },
-  castItem: {
-    // zIndex: "100",
-    // color: "#fff",
-    // width: "400px",
-    // height: "200px",
-  },
+  content: {},
+  castContainer: {},
+  castItem: {},
 });
 
 const MovieDetails = () => {
@@ -146,7 +104,6 @@ const MovieDetails = () => {
                       readOnly
                     />
                     <Typography ml={1} component="span" variant="h6">
-                      {" "}
                       based on {vote_count} votes
                     </Typography>
                   </div>
@@ -164,20 +121,20 @@ const MovieDetails = () => {
             </Typography>
             <Typography variant="h6">Runtime: {runtime} minutes</Typography>
           </Grid>
-          {/* </Grid> */}
 
-          <Grid
-            component="section"
-            item
-            xs={12}
-            className={classes.castContainer}
-          >
-            <Grid container component="div">
+          <Grid component="section" item xs={12}>
+            <Grid container component="div" spacing={2}>
               {movieCast &&
                 movieCast.length > 0 &&
                 movieCast.map((actor) => (
-                  <Grid item key={actor.id} xs={3} className={classes.castItem}>
-                    <ActorChip actor={actor} imgWidth={110} imgHeight={160} />
+                  <Grid
+                    item
+                    key={actor.id}
+                    xs={12}
+                    md={6}
+                    className={classes.castItem}
+                  >
+                    <ActorItem actor={actor} />
                   </Grid>
                 ))}
             </Grid>

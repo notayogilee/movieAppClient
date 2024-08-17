@@ -4,68 +4,33 @@ import { useDispatch, useSelector } from "react-redux";
 import { showDetails } from "../../actions/showActions";
 import Navbar from "../utils/Navbar";
 import ActorItem from "../items/ActorItem";
-import ActorChip from "../chips/ActorChip";
 import moviePoster from "../img/anika-mikkelson.jpg";
-import {
-  Container,
-  Typography,
-  Rating,
-  Fade,
-  Slide,
-  Chip,
-  Avatar,
-  Grid,
-} from "@mui/material";
+import { Container, Typography, Rating, Fade, Box, Grid } from "@mui/material";
 import { makeStyles } from "@mui/styles";
 
 const useStyles = makeStyles({
   root: {
-    // overflow: "hidden",
-    // position: "relative",
-    // width: "100%",
-    // margin: "0",
-    // padding: "0 !important",
-    color: "#fff",
+    color: "#f4f4f4",
+  },
+  container: {
+    marginTop: "100px !important",
   },
   image: {
-    // pointerEvents: "none",
-    // position: "absolute",
     width: "100%",
     height: "auto",
-    // opacity: "0.4",
-    // zIndex: "-1",
   },
-  body: {
-    // height: "100vh",
-    // width: "100vw",
-    // margin: "0",
-    // background:
-    //   "linear-gradient(to right, rgba(0, 0, 0, 1), rgba(51, 51, 51, 0))",
+
+  headerImage: {
+    position: "relative",
   },
-  content: {
-    // position: "absolute",
-    // color: "#f4f4f4",
-    // height: "80%",
-    // width: "30%",
-    // zIndex: "100",
-    // top: "15%",
-    // left: "3%",
-  },
-  castContainer: {
-    // position: "absolute",
-    // color: "#f4f4f4",
-    // height: "68%",
-    // width: "auto !important",
-    // zIndex: "100",
-    // top: "22.5%",
-    // left: "40%",
-    // overflowY: "auto",
-  },
-  castItem: {
-    // zIndex: "100",
-    // color: "#fff",
-    // width: "400px",
-    // height: "200px",
+  headerText: {
+    position: "absolute",
+    bottom: 0,
+    left: 0,
+    width: "100%",
+    padding: "20px",
+    background:
+      "linear-gradient(90deg, rgba(0,0,0,1) 0%, rgba(212,210,210,0.1) 100%)",
   },
 });
 
@@ -113,7 +78,60 @@ const ShowDetails = () => {
     <Container className={classes.root}>
       <Navbar />
       <Fade in={!loading}>
-        <div className={classes.body}>
+        <Grid container rowSpacing={3} className={classes.container}>
+          <Grid item xs={12} component="section" className={classes.header}>
+            <Box
+              sx={{
+                width: "100%",
+                height: "500px",
+                backgroundImage: `url('https://www.themoviedb.org/t/p/original${backdrop_path}')`, // Set the background image URL
+                backgroundSize: "cover",
+                backgroundPosition: "center",
+                backgroundRepeat: "no-repeat",
+              }}
+              className={classes.headerImage}
+            >
+              <div className={classes.headerText}>
+                <Typography variant="h3">{name}</Typography>
+                {vote_count !== 0 && (
+                  <div style={{ display: "flex", alignItems: "center" }}>
+                    <Rating
+                      value={rating}
+                      precision={0.1}
+                      size="small"
+                      readOnly
+                    />
+                    <Typography ml={1} component="span" variant="h6">
+                      based on {vote_count} votes
+                    </Typography>
+                  </div>
+                )}
+              </div>
+            </Box>
+          </Grid>
+          <Grid component="section" item xs={12} className={classes.content}>
+            <Typography mt={4} variant="h5">
+              {overview}
+            </Typography>
+
+            <Typography variant="h6">
+              Runtime: {episode_run_time} minutes
+            </Typography>
+          </Grid>
+
+          <Grid component="section" item xs={12}>
+            <Grid container component="div" spacing={2}>
+              {showCast &&
+                showCast.length > 0 &&
+                showCast.map((actor) => (
+                  <Grid item key={actor.id} xs={12} md={6}>
+                    <ActorItem actor={actor} />
+                  </Grid>
+                ))}
+            </Grid>
+          </Grid>
+        </Grid>
+        {/* <div className={classes.body}>
           <img
             className={classes.image}
             src={`https://www.themoviedb.org/t/p/original${backdrop_path}`}
@@ -157,7 +175,7 @@ const ShowDetails = () => {
                 </Grid>
               ))}
           </Grid>
-        </div>
+        </div> */}
       </Fade>
     </Container>
   );

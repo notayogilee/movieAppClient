@@ -6,27 +6,14 @@ import Moment from "react-moment";
 import Navbar from "../utils/Navbar";
 import MovieItem from "../items/MovieItem";
 import ShowItem from "../items/ShowItem";
-import { Container, Typography, Fade, Slide, Grid, Box } from "@mui/material";
+import { Container, Typography, Fade, Avatar, Grid, Box } from "@mui/material";
 import { makeStyles } from "@mui/styles";
 import moviePoster from "../img/anika-mikkelson.jpg";
 
 const useStyles = makeStyles({
-  root: {
-    position: "relative",
-    width: "100%",
-    margin: "0",
-    padding: "0 !important",
-  },
-  content: {
-    // position: "absolute",
-    // display: "flex",
-    // flexDirection: "column",
-    // color: "#f4f4f4",
-    // height: "80%",
-    // width: "40%",
-    // top: "15%",
-    // left: "3%",
-  },
+  root: {},
+
+  content: {},
   images: {
     display: "flex",
     flexDirection: "column",
@@ -37,20 +24,9 @@ const useStyles = makeStyles({
     overflowY: "scroll",
     cursor: "pointer",
   },
-  castContainer: {
-    // position: "absolute",
-    // color: "#f4f4f4",
-    // height: "68%",
-    // width: "auto !important",
-    // zIndex: "100",
-    // top: "22.5%",
-    // left: "50%",
-    // overflowY: "auto",
-  },
+  castContainer: {},
   body: {
-    // height: "100vh",
-    // width: "100vw",
-    // margin: "0",
+    marginTop: "120px !important",
   },
 });
 
@@ -100,7 +76,6 @@ const ActorDetails = () => {
 
       <Fade in={!loading}>
         <div className={classes.body}>
-          {/* <Slide timeout={750} direction="right" in={!loading}> */}
           <div className={classes.content}>
             <div style={{ display: "flex" }}>
               <img
@@ -114,26 +89,21 @@ const ActorDetails = () => {
                     : moviePoster
                 }
               />
-              <div
-                className={
-                  profiles && profiles.length > 1 ? classes.images : "hidden"
-                }
-              >
-                {profiles &&
-                  profiles.map((extraImage) => (
-                    <img
-                      onClick={() =>
-                        setMainImage(
-                          `https://www.themoviedb.org/t/p/original${extraImage.file_path}`
-                        )
-                      }
-                      key={extraImage.file_path}
-                      height="150"
-                      width="100"
-                      src={`https://www.themoviedb.org/t/p/original${extraImage.file_path}`}
-                    />
-                  ))}
-              </div>
+              {profiles &&
+                profiles.length > 1 &&
+                profiles.map((extraImage) => (
+                  <Avatar
+                    onClick={() =>
+                      setMainImage(
+                        `https://www.themoviedb.org/t/p/original${extraImage.file_path}`
+                      )
+                    }
+                    key={extraImage.file_path}
+                    height="150"
+                    width="100"
+                    src={`https://www.themoviedb.org/t/p/original${extraImage.file_path}`}
+                  />
+                ))}
             </div>
 
             <div>
@@ -151,9 +121,6 @@ const ActorDetails = () => {
               <Typography variant="h6">{biography}</Typography>
             </div>
           </div>
-          {/* </Slide> */}
-
-          {/* <Slide timeout={750} direction="left" in={!loading}> */}
           <div className={classes.castContainer}>
             {movieCast && (
               <Typography variant="h4" textAlign="center">
@@ -200,7 +167,6 @@ const ActorDetails = () => {
                 ))}
             </Grid>
           </div>
-          {/* </Slide> */}
         </div>
       </Fade>
     </Container>
